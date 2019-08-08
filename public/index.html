@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Playlist Organizer</title>
+    <meta name="author" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://kit.fontawesome.com/eb8139092e.js"></script>
+</head>
+
+<body class="d-flex flex-column">
+    <!--
+    <div>
+        <nav class="sticky-top navbar bg-dark justify-content-between">
+            <a style="color: #1DB954;" class="navbar-brand" href="#">Playlist Tool</a>
+            <ul class="mr-5">
+            </ul>
+        </nav>
+    </div>
+-->
+    <div id="page-content" class="mt-5">
+
+
+        <div id="loginPage" class="container mb-3">
+            <h1 class="pt-3 mb-2">Playlist Organizer For Spotify</h1>
+            <p></p>
+            <p>A faster, more human, way of organizing which of your songs are in which of your playlists.</p>
+            <p>This application allows you to place your currently playing song into any number of your playlists, without all the menuing.</p>
+            <button id="loginButton" style="width: 35%; margin-top: 20vh; margin-right: 5vh; float:right">Login</button>
+            <div class="guard"></div>
+        </div>
+
+        <div id="playlistsView" class="container mb-3" id="" style="display: none">
+            <h1 class="">Playlist Editor: </h1>
+            <div class="row gutter" id="playlistHolder">
+
+                <!--
+                <div id="${newPlaylist['uri'].substring(17)}" class="notInList mt-3 col-6 col-md-3 overCard">
+                    <div class="col-sm-12 Card" style="position:relative !important">
+                        <img ondblclick="dblc();" onclick="addToPlaylist()" style="z-index: 5;" class="innerCard albumArt notInList" src="${newPlaylist[" images "][0]['url']}">
+                    </div>
+
+                    <div class="playlistTitle" style="width:100%; margin:auto">${newPlaylist["name"]}</div>
+                </div>
+                -->
+
+                <!--
+                <div id="p${knownPlaylists.length}" class="mt-3 col-6 col-md-3 overCard">
+                    <div class="col-sm-12 Card">
+                        <img onclick="" class="innerCard albumArt notInList" src="./img/test.jpg">
+                    </div>
+                    <div class="playlistTitle">Single</div>
+                </div>
+
+                <div id="p${knownPlaylists.length}" class="mt-3 col-6 col-md-3 overCard">
+                    <div class="col-sm-12 Card ">
+                        <img onclick="" class="innerCard albumArt notInList" src="./img/test.jpg">
+                    </div>
+                    <div class="playlistTitle">Quad</div>
+                </div>
+                -->
+
+                <!--
+                <a href="#playlistList" class="mt-3 col-6 col-md-3 overCard">
+                    <div class="col-lg-12 Card">
+                        <img id="add" onclick="plus()" class="innerCard albumArt" src="./img/plus.png">
+                    </div>
+                    <div class="playlistTitle">Add Playlist</div>
+                </a>
+            -->
+            </div>
+
+        </div>
+
+        <div id="playlistList" class="container mb-3" style="display: none">
+            <button onclick="openList()" style="width: 35%; margin-top: 0vh; margin-left: 0vw" type="button" data-toggle="" data-target="#disappear" class="spotifyBtn mb-3">
+                Playlists
+            </button>
+            <div id="" class="">
+                <ul id="playlistListList" class="list-group">
+                </ul>
+            </div>
+        </div>
+        <div class="guard"></div>
+    </div>
+
+
+    <footer id="sticky-footer" class="footer bg-dark text-white-50">
+        <div class="footer-contents">
+            <p style="float: left;">
+                <img id="currentArt" src="" height="100px" width="100px">
+            </p>
+            <div class="marquee" style="margin-left: 120px; padding-top: 10px; width: 35vw; ">
+                <span class="" id="currentTrack"></span>
+            </div>
+            <div class="marquee" style="font-size: .9em; width: 35vw; margin-left:120px; padding-top: 2px">
+                <span class="" id="currentAlbum"></span>
+            </div>
+            <div class="marquee" style="width: 35vw; font-size: .7em; margin-left: 120px; padding-top: 2px">
+                <span class="" id="currentArtist"></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script src="loginScript.js"></script>
+    <script src="apiCalls.js"></script>
+</body>
+
+</html>
