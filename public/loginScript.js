@@ -61,20 +61,8 @@ if (access_token && (state == null || state !== storedState)) {
                 $("#playlistListList").show();
                 $("#sticky-footer").hide();
                 username = response['id'];
-                // alert(username)
-                $.ajax({
-                    url: "https://api.spotify.com/v1/me/playlists?limit=50",
-                    type: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + access_token
-                    },
-                    success: function(data) {
-                        console.log(data)
-                        playlistJSON = (data);
 
-                        getPlaylistTracks();
-                    }
-                });
+                getPlaylistURIs();
 
             }
         });

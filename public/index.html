@@ -16,6 +16,8 @@
 </head>
 
 <body class="d-flex flex-column">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
     <!--
     <div>
         <nav class="sticky-top navbar bg-dark justify-content-between">
@@ -38,7 +40,21 @@
         </div>
 
         <div id="playlistsView" class="container mb-3" id="" style="display: none">
-            <h1 class="">Playlist Editor: </h1>
+            <h1>Playlist Organizer</h1>
+            <div id="tips">
+                <h1 class="pt-3 mb-2">How to:</h1>
+                <p></p>
+                <p>Add a playlist to edit with below. The playlist cover art will be outlined in green if the currently playing track is in that playlist, and gray otherwise.
+                </p>
+                <p>You can click on the album art to toggle.
+                </p>
+                <span id="go" style="color:#BBB">Click here to dismiss this advice.</span>
+                <script>
+                    $("#go").click(function() {
+                        $("#tips").fadeOut("slow");
+                    });
+                </script>
+            </div>
             <div class="row gutter" id="playlistHolder">
 
                 <!--
@@ -109,7 +125,6 @@
         </div>
     </footer>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.js" crossorigin="anonymous"></script>
