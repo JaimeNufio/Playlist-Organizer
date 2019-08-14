@@ -16,6 +16,15 @@ function songInPlaylist(songURI, playlistObject) {
 //Get Current Song
 var songObj = null;
 setInterval(function() {
+
+    if (songObj == null && advicehide == true) {
+        console.log("Show advice")
+        $("#playSomething").show();
+    } else {
+        console.log("Hide advice")
+        $("#playSomething").hide();
+    }
+
     if (loggedIn) {
         $.ajax({
             url: "https://api.spotify.com/v1/me/player/currently-playing",
@@ -90,7 +99,7 @@ setInterval(function() {
         });
     }
 
-}, 1000);
+}, 500);
 
 
 //Check Playlists

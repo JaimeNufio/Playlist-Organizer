@@ -35,23 +35,26 @@
             <p></p>
             <p>A faster, more human, way of organizing which of your songs are in which of your playlists.</p>
             <p>This application allows you to place your currently playing song into any number of your playlists, without all the menuing.</p>
-            <button id="loginButton" style="width: 35%; margin-top: 20vh; margin-right: 5vh; float:right">Login</button>
+
+            <button id="loginButton" style="width: 150px; margin-top: 20vh; margin-right: 5vh; float:right">Login</button>
             <div class="guard"></div>
         </div>
 
         <div id="playlistsView" class="container mb-3" id="" style="display: none">
             <h1>Playlist Organizer</h1>
+            <p id="playSomething">Play something on Spotify!</p>
             <div id="tips">
                 <h1 class="pt-3 mb-2">How to:</h1>
                 <p></p>
                 <p>Add a playlist to edit with below. The playlist cover art will be outlined in green if the currently playing track is in that playlist, and gray otherwise.
                 </p>
-                <p>You can click on the album art to toggle.
-                </p>
+                <p>You can click on the album art to toggle. </p>
+                <p style="color:red">You need to open Spotify and play some music to get started!</p>
                 <span id="go" style="color:#BBB">Click here to dismiss this advice.</span>
                 <script>
                     $("#go").click(function() {
                         $("#tips").fadeOut("slow");
+                        adviceHide = true;
                     });
                 </script>
             </div>
@@ -96,7 +99,7 @@
         </div>
 
         <div id="playlistList" class="container mb-3" style="display: none">
-            <button onclick="openList()" style="width: 35%; margin-top: 0vh; margin-left: 0vw" type="button" data-toggle="" data-target="#disappear" class="spotifyBtn mb-3">
+            <button onclick="openList()" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button" data-toggle="" data-target="#disappear" class="spotifyBtn mb-3">
                 Playlists
             </button>
             <div id="" class="">

@@ -8,8 +8,8 @@ var username;
 
 //playlistJSON, just everything about all the playlists
 var playlistJSON = null;
-
 var openState = false;
+var advicehide = false;
 
 function openList() {
     $("#playlistListList").show();
@@ -279,6 +279,8 @@ function checkIfSongInPlaylist(uri) {
         trackSet = [];
     }
 }
+
+
 
 
 
