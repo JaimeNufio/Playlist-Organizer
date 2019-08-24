@@ -18,18 +18,7 @@
 <body class="d-flex flex-column">
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
-    <!--
-    <div>
-        <nav class="sticky-top navbar bg-dark justify-content-between">
-            <a style="color: #1DB954;" class="navbar-brand" href="#">Playlist Tool</a>
-            <ul class="mr-5">
-            </ul>
-        </nav>
-    </div>
--->
     <div id="page-content" class="mt-5">
-
-
         <div id="loginPage" class="container mb-3">
             <h1 class="pt-3 mb-2">Playlist Organizer For Spotify</h1>
             <p></p>
@@ -60,40 +49,6 @@
             </div>
             <div class="row gutter" id="playlistHolder">
 
-                <!--
-                <div id="${newPlaylist['uri'].substring(17)}" class="notInList mt-3 col-6 col-md-3 overCard">
-                    <div class="col-sm-12 Card" style="position:relative !important">
-                        <img ondblclick="dblc();" onclick="addToPlaylist()" style="z-index: 5;" class="innerCard albumArt notInList" src="${newPlaylist[" images "][0]['url']}">
-                    </div>
-
-                    <div class="playlistTitle" style="width:100%; margin:auto">${newPlaylist["name"]}</div>
-                </div>
-                -->
-
-                <!--
-                <div id="p${knownPlaylists.length}" class="mt-3 col-6 col-md-3 overCard">
-                    <div class="col-sm-12 Card">
-                        <img onclick="" class="innerCard albumArt notInList" src="./img/test.jpg">
-                    </div>
-                    <div class="playlistTitle">Single</div>
-                </div>
-
-                <div id="p${knownPlaylists.length}" class="mt-3 col-6 col-md-3 overCard">
-                    <div class="col-sm-12 Card ">
-                        <img onclick="" class="innerCard albumArt notInList" src="./img/test.jpg">
-                    </div>
-                    <div class="playlistTitle">Quad</div>
-                </div>
-                -->
-
-                <!--
-                <a href="#playlistList" class="mt-3 col-6 col-md-3 overCard">
-                    <div class="col-lg-12 Card">
-                        <img id="add" onclick="plus()" class="innerCard albumArt" src="./img/plus.png">
-                    </div>
-                    <div class="playlistTitle">Add Playlist</div>
-                </a>
-            -->
             </div>
 
         </div>
@@ -116,14 +71,16 @@
             <p style="float: left;">
                 <img id="currentArt" src="" height="100px" width="100px">
             </p>
-            <div class="marquee" style="margin-left: 120px; padding-top: 10px; width: 35vw; ">
-                <span class="" id="currentTrack"></span>
+
+
+            <div class="marqueeOff" style="height:2em; margin-left: 120px; padding-top: 10px;  ">
+                <span style="height:2em;" class="" id="currentTrack"></span>
             </div>
-            <div class="marquee" style="font-size: .9em; width: 35vw; margin-left:120px; padding-top: 2px">
-                <span class="" id="currentAlbum"></span>
+            <div class="marqueeOff" style="height:2em; font-size: .9em; margin-left:120px; padding-top: 2px">
+                <span style="height:2em;" class="" id="currentAlbum"></span>
             </div>
-            <div class="marquee" style="width: 35vw; font-size: .7em; margin-left: 120px; padding-top: 2px">
-                <span class="" id="currentArtist"></span>
+            <div class="marqueeOff" style="height:2em; font-size: .7em; margin-left: 120px; padding-top: 2px">
+                <span style="height:2em;" class="" id="currentArtist"></span>
             </div>
         </div>
     </footer>

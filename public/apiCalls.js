@@ -1,4 +1,5 @@
 console.log("test")
+var advicehide = false;
 
 var wasNull = true;
 var cap = 20;
@@ -18,10 +19,10 @@ var songObj = null;
 setInterval(function() {
 
     if (songObj == null && advicehide == true) {
-        console.log("Show advice")
+       // console.log("Show advice")
         $("#playSomething").show();
     } else {
-        console.log("Hide advice")
+        //console.log("Hide advice")
         $("#playSomething").hide();
     }
 
@@ -40,16 +41,16 @@ setInterval(function() {
                 }
 
                 if (songObj == null || data['item']['uri'] != songObj['item']['uri']) {
-                    if (songObj != null) {
-                        console.log("not null");
-                        console.log(data['item']['name'] + " vs " + songObj['item']['name']);
-                    } else {
+                   // if (songObj != null) {
+                   //     console.log("not null");
+                   //     console.log(data['item']['name'] + " vs " + songObj['item']['name']);
+                   // } else {
                         songObj = data;
                         wasNull = true;
-                    }
+                    //}
                 }
                 //update Song
-                if (data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
+                if (wasNull){//data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
                     wasNull = false;
                     songObj = data;
 
@@ -93,13 +94,15 @@ setInterval(function() {
                     }
 
                     $("#currentArt").attr("src", songObj['item']['album']['images'][0]["url"]);
-                    //   checkIfSongInPlaylist();
                 }
+            },
+            error: function(err){
+                console.log(err);
             }
         });
     }
 
-}, 500);
+}, 150);
 
 
 //Check Playlists
@@ -107,13 +110,12 @@ setInterval(function() {
 setInterval(function() {
     //   getAlbumObj();
     if (songObj != null) {
-        //  checkIfSongInPlaylist();
-        //  console.log("beep.")
         for (let i = 0; i < knownPlaylists.length; i++) {
-            updateSinglePlaylist(knownPlaylists[i])
+            updateSinglePlaylist(knownPlaylists[i]);
+            updateSingePlaylistNameArt(knownPlaylists[i]);
         }
     }
-}, 2000)
+}, 500)
 
 
 function removeSongFromPlaylist(songURI, playlistURI) {
@@ -128,7 +130,6 @@ function removeSongFromPlaylist(songURI, playlistURI) {
         data: bodyTxt,
         success: function(data) {
             console.log("Should have removed the song?")
-            checkIfSongInPlaylist();
         },
 
     });
@@ -142,10 +143,9 @@ function addSongFromPlaylist(songURI, playlistURI) {
             'Authorization': 'Bearer ' + access_token,
 
         },
-        //data: { "tracks": [{ "uri": `spotify:track:${songURI}` }] },
+
         success: function(data) {
-            console.log("Should have added the song?")
-                // checkIfSongInPlaylist();
+            console.log("Should have added the song?");
         }
     });
 }
@@ -224,6 +224,16 @@ function spotGetTracks(uri, offset) {
             } else {
                 // return getTracks;
             }
+        },
+    });
+}
+
+function spotGetPlaylistInfo(uri){
+    return $.ajax({
+        url: `https://api.spotify.com/v1/playlists/${uri}`,
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + access_token
         },
     });
 }
