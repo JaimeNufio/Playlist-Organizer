@@ -47,10 +47,11 @@ setInterval(function() {
                    // } else {
                         songObj = data;
                         wasNull = true;
+
                     //}
                 }
                 //update Song
-                if (wasNull){//data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
+                if (wasNull || songObj['item']['uri'] != data['item']['uri']){//data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
                     wasNull = false;
                     songObj = data;
 
@@ -94,6 +95,12 @@ setInterval(function() {
                     }
 
                     $("#currentArt").attr("src", songObj['item']['album']['images'][0]["url"]);
+
+
+		    for (let i = 0; i < knownPlaylists.length; i++) {
+			updateSinglePlaylist(knownPlaylists[i]);
+			updateSingePlaylistNameArt(knownPlaylists[i]);
+		    }
                 }
             },
             error: function(err){
@@ -111,8 +118,8 @@ setInterval(function() {
     //   getAlbumObj();
     if (songObj != null) {
         for (let i = 0; i < knownPlaylists.length; i++) {
-            updateSinglePlaylist(knownPlaylists[i]);
-            updateSingePlaylistNameArt(knownPlaylists[i]);
+//            updateSinglePlaylist(knownPlaylists[i]);
+//            updateSingePlaylistNameArt(knownPlaylists[i]);
         }
     }
 }, 500)

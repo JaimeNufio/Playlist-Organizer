@@ -76,7 +76,8 @@ if (access_token && (state == null || state !== storedState)) {
     document.getElementById('loginButton').addEventListener('click', function() {
 
         var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
-        var redirect_uri = "http://localhost:5000" //"http://localhost:5000"
+        var redirect_uri = "http://playlists.wezlalabs.com/";//"http://localhost:5000" //"http://localhost:5000"
+
             //'http://www.spotifystats.com/'; // Your redirect uri
 
         var state = generateRandomString(16);
