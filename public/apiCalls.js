@@ -55,10 +55,10 @@ setInterval(function() {
                 if (wasNull || songObj['item']['uri'] != data['item']['uri']){//data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
                     wasNull = false;
                     songObj = data;
-                    console.log("Updating song");
+                  //console.log("Updating song");
 
-                    console.log("SongObj")
-                    console.log(songObj)
+                  //console.log("SongObj")
+                  //console.log(songObj)
 
                     $("#sticky-footer").show();
                     currentSong = data;
@@ -75,7 +75,7 @@ setInterval(function() {
                     if (songObj['item']['album']['name'].length > cap) {
                         document.querySelector("#currentAlbum").classList.add("go")
                     } else {
-                        console.log("Don't Scroll.")
+                    //    console.log("Don't Scroll.")
                         document.querySelector("#currentAlbum").classList.remove("go");
                     }
 
@@ -92,7 +92,7 @@ setInterval(function() {
                     if (artists.length > cap) {
                         document.querySelector("#currentArtist").classList.add("go")
                     } else {
-                        console.log("Don't Scroll.")
+                      //console.log("Don't Scroll.")
                         document.querySelector("#currentArtist").classList.remove("go");
                     }
 
@@ -100,8 +100,8 @@ setInterval(function() {
 
 
 		    for (let i = 0; i < knownPlaylists.length; i++) {
-			updateSinglePlaylist(knownPlaylists[i]);
-			updateSingePlaylistNameArt(knownPlaylists[i]);
+			    updateSinglePlaylist(knownPlaylists[i]);
+			    updateSingePlaylistNameArt(knownPlaylists[i]);
 		    }
                 }
             },
@@ -120,14 +120,15 @@ setInterval(function() {
     //   getAlbumObj();
     if (songObj != null) {
         for (let i = 0; i < knownPlaylists.length; i++) {
-            updateSinglePlaylist(knownPlaylists[i]);
-            updateSingePlaylistNameArt(knownPlaylists[i]);
+//            updateSinglePlaylist(knownPlaylists[i]);
+//            updateSingePlaylistNameArt(knownPlaylists[i]);
         }
     }
 }, 500)
 
 function removeSongFromPlaylist(songURI, playlistURI) {
     let tag = Math.random();
+    console.log("USER REQUEST REMOVE SONG TO PLAYLIST");
 
     bodyTxt = JSON.stringify({ "tracks": [{ "uri": "spotify:track:" + songURI }] })
     return $.ajax({
@@ -139,6 +140,8 @@ function removeSongFromPlaylist(songURI, playlistURI) {
         data: bodyTxt,
         success: function(data) {
             console.log("SUCCESS REMOVE SONG")
+            updateSinglePlaylist(playlistURI);
+            updateSingePlaylistNameArt(playlistURI);
         }
         ,error: function(data){
             console.log("ERROR REMOVE SONG")
@@ -152,6 +155,7 @@ function removeSongFromPlaylist(songURI, playlistURI) {
 }
 
 function addSongFromPlaylist(songURI, playlistURI) {
+    console.log("USER REQUEST ADD SONG TO PLAYLIST");
     let tag = Math.random();
     return $.ajax({
         url: `https://api.spotify.com/v1/playlists/${playlistURI}/tracks?uris=spotify:track:${songURI}`,
@@ -163,6 +167,8 @@ function addSongFromPlaylist(songURI, playlistURI) {
 
         success: function(data) {
           console.log("SUCCESS ADD SONG")
+            updateSinglePlaylist(playlistURI);
+            updateSingePlaylistNameArt(playlistURI);
         }
         ,error: function(data){
           console.log("ERROR ADD SONG")
@@ -186,7 +192,7 @@ function getPlaylistURIs() {
             'Authorization': 'Bearer ' + access_token
         },
         success: function(data) {
-            console.log(data)
+           // console.log(data)
             playlistJSON = (data);
         }
         //retry
@@ -318,7 +324,7 @@ function getArtistObj() {
             'Authorization': 'Bearer ' + access_token
         },
         success: function(data) {
-            console.log(data)
+           // console.log(data)
             albumObj = data;
         }
         ,error: function(data){

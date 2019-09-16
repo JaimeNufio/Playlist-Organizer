@@ -13,7 +13,7 @@ var openState = false;
 
 function openList() {
     $("#playlistListList").show();
-    console.log("open")
+  //  console.log("open")
 
     if (!openState) {
         populate();
@@ -26,7 +26,7 @@ function openList() {
 function createNewPlaylistDiv(newPlaylist) {
     //console.log(knownPlaylists);
     //temp fix
-    console.log(newPlaylist);
+//    console.log(newPlaylist);
     let newDiv = "";
 
     if (newPlaylist['images'].length > 0){
@@ -51,6 +51,10 @@ function createNewPlaylistDiv(newPlaylist) {
             //<button type="btn" class="btn btn-danger" style="width:100%; height=50%; float:right; padding:auto">Remove</button>
         `</div>`;
     }
+    updateSinglePlaylist(newPlaylist['uri'].substring(17));
+    updateSingePlaylistNameArt(newPlaylist['uri'].substring(17));
+
+
     return newDiv;
 }
 
@@ -59,12 +63,12 @@ function addNewPlaylistDiv(i) {
 
     // console.log(songObj)
 
-    console.log(knownPlaylists)
-    console.log(playlistJSON['items'][i]['uri'].substring(17))
+ //   console.log(knownPlaylists)
+ //   console.log(playlistJSON['items'][i]['uri'].substring(17))
 
 
     if (findByUri(knownPlaylists, playlistJSON['items'][i]['uri'].substring(17)) != null) {
-        console.log("already exists in our list");
+   //     console.log("already exists in our list");
         return;
     } else {
         knownPlaylists.push(playlistJSON['items'][i]['uri'].substring(17));
@@ -83,8 +87,8 @@ function addNewPlaylistDiv(i) {
 //read the JSON, create objects as seen.
 function populate() {
 
-    console.log("playlistJSON")
-    console.log(playlistJSON)
+   // console.log("playlistJSON")
+   // console.log(playlistJSON)
 
     if (playlistJSON != null) {
         //console.log("")
@@ -144,7 +148,7 @@ function unpopulate() {
 function findByUri(objArray, id) {
     for (let i = 0; i < objArray.length; i++) {
         if (objArray[i] == id) {
-            console.log("Exists!");
+     //       console.log("Exists!");
             return objArray[i];
         }
     }
@@ -161,29 +165,29 @@ function AinB(item, Arr) {
 }
 
 function removeFromPlaylistList() {
-    console.log("remove");
+   // console.log("remove");
 }
 
 //ClickHandler For each PlaylistDiv
 function actionToPlaylist(playlistUri) {
-    console.log(`Button_${playlistUri}`);
+   // console.log(`Button_${playlistUri}`);
 
     if (songObj == null || songObj['item'] == null) {
-        console.log("No song is playing.");
+     //   console.log("No song is playing.");
         return;
     } else {
-        console.log(songObj['item']['name'])
+     //   console.log(songObj['item']['name'])
     }
 
     $.when(spotGetTracks(playlistUri, 0).done(function(data) {
-        console.log(spotTrackSet);
-        console.log(songObj['item']['uri'].substring(14))
+       // console.log(spotTrackSet);
+       // console.log(songObj['item']['uri'].substring(14))
         if (AinB(songObj['item']['uri'].substring(14), spotTrackSet)) {
-            console.log("This playlist contains the song already.")
+         //   console.log("This playlist contains the song already.")
             removeSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
            
         } else {
-            console.log("This playlist does not contain the song already.")
+         //   console.log("This playlist does not contain the song already.")
             addSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
            
         }
@@ -193,14 +197,14 @@ function actionToPlaylist(playlistUri) {
 function updateSingePlaylistNameArt(playlistURI){
    
     if (songObj == null) {
-        console.log("No song is playing.");
+    //    console.log("No song is playing.");
         return;
     } else {
-        console.log(songObj['item']['name'])
+      //  console.log(songObj['item']['name'])
     }
 
     $.when(spotGetPlaylistInfo(playlistURI).done(function(data){
-        console.log(data);
+      //  console.log(data);
         document.querySelector(`#Name_${playlistURI}`).innerHTML=data['name'];
         document.querySelector(`#Button_${playlistURI}`).src=data['images'][0]['url'];
     }));
@@ -208,23 +212,23 @@ function updateSingePlaylistNameArt(playlistURI){
 
 
 function updateSinglePlaylist(playlistUri) {
-    console.log(`Button_${playlistUri}`);
+   // console.log(`Button_${playlistUri}`);
 
     if (songObj == null) {
-        console.log("No song is playing.");
+     //   console.log("No song is playing.");
         return;
     } else {
-        console.log(songObj['item']['name'])
+       // console.log(songObj['item']['name'])
     }
 
     $.when(spotGetTracks(playlistUri, 0).done(function(data) {
-        console.log(spotTrackSet);
+       // console.log(spotTrackSet);
 
         songObj['item']['album']
 
-        console.log(songObj['item']['uri'].substring(14))
+      //  console.log(songObj['item']['uri'].substring(14))
         if (AinB(songObj['item']['uri'].substring(14), spotTrackSet)) {
-            console.log("This playlist contains the song already.")
+        //    console.log("This playlist contains the song already.")
         
            // removeSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
             if (document.querySelector(`#Div_${playlistUri}`).classList.contains("notInList")) {
@@ -237,7 +241,7 @@ function updateSinglePlaylist(playlistUri) {
 
         } else {
          //   addSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
-            console.log("This playlist does not contain the song already.")
+          //  console.log("This playlist does not contain the song already.")
      
             if (document.querySelector(`#Div_${playlistUri}`).classList.contains("inList")) {
                 document.querySelector(`#Div_${playlistUri}`).classList.remove("inList");
@@ -253,7 +257,7 @@ function updateSinglePlaylist(playlistUri) {
 
 
 function dblc() {
-    console.log("Double click");
+    //console.log("Double click");
 }
 
 //uri is song uri
@@ -264,7 +268,7 @@ function checkIfSongInPlaylist(uri) {
         uri = songObj['item']['uri'].substring(14)
     }
 
-    console.log("Scan all playlists")
+   // console.log("Scan all playlists")
 
     //for each known playlist
 
@@ -272,7 +276,7 @@ function checkIfSongInPlaylist(uri) {
         //Collect all of a playlist's tracks in trackSet, wait for it tho.
         $.when(getTracks(knownPlaylists[i], 0).done(function(data) {
 
-            console.log(data)
+     //       console.log(data)
                 // console.log(trackSet[j])
             let found = false;
             //for each track in trackSet
@@ -295,7 +299,7 @@ function checkIfSongInPlaylist(uri) {
             }
             //reset counter
             if (!found) {
-                console.log("not found")
+       //         console.log("not found")
 
             }
         }))
