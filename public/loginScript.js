@@ -6,6 +6,18 @@ $("#sticky-footer").hide();
 var stateKey = 'spotify_auth_state';
 var loggedIn = false;
 var currentSong = null;
+var scope =
+"playlist-read-private " +
+"user-read-currently-playing " +
+"user-read-playback-state " +
+"playlist-modify-public " +
+"playlist-modify-private ";
+
+var online = "http://playlists.wezlalabs.com/";
+var localHost = "http://localhost:5000" //"http://localhost:5000"
+
+var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
+var redirect_uri = localHost; 
 
 /**
  * Obtains parameters from the hash of the URL
@@ -75,20 +87,12 @@ if (access_token && (state == null || state !== storedState)) {
     //Login with Spotify
     document.getElementById('loginButton').addEventListener('click', function() {
 
-        var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
-        var redirect_uri = "http://playlists.wezlalabs.com/";//"http://localhost:5000" //"http://localhost:5000"
 
             //'http://www.spotifystats.com/'; // Your redirect uri
 
         var state = generateRandomString(16);
 
         localStorage.setItem(stateKey, state);
-        var scope =
-            "playlist-read-private " +
-            "user-read-currently-playing " +
-            "user-read-playback-state " +
-            "playlist-modify-public " +
-            "playlist-modify-private ";
 
         var url = 'https://accounts.spotify.com/authorize';
         url += '?response_type=token';
