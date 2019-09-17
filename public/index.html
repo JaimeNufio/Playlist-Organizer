@@ -18,19 +18,61 @@
 <body class="d-flex flex-column">
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
-    <div id="page-content" class="mt-5">
-        <div id="loginPage" class="container mb-3">
-            <h1 class="pt-3 mb-2">Playlist Organizer For Spotify</h1>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="name navbar-brand " href="#">Nufi<i class="name fas fa-compact-disc"></i></a>
+            
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" 
+            data-target="#navbarCollapse" aria-controls="navbarCollapse" 
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+            </button>
+
+
+            <div class="navbar-collapse collapse" id ="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-music"></i>Playlists</a></li>
+                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-guitar"></i>Song Info</a></li>
+                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-portrait"></i>Artist Info</a></li>          
+                    <li class="nav-item">
+                            <div class="hid" style="height:100%">
+                                    <a id="username" class="float-left ml-3 nav-link active"></a>
+                                    <img id="pfp" class="float-left mr-2 mt-0" style="border-radius:50%;width:42px;height:42px" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
+                                </div>
+                    </li>
+                </ul>
+            </div>
+
+           
+            <!--
+                    <li class="nav-item">    
+                    </li>      
+                -->
+        </div>
+        <!--
+        <div style="width:100%"; class="bg-secondary pl-2 pt-1 pb-1">
+            Playlist Organizer
+        </div>
+
+    -->
+    </nav>
+
+    <div id="page-content" class="mt-5 container">
+
+        <div id="loginPage" class="mb-3 mt-5">
+            <div class="">
+           <h1 class="mb-2">Some Tools For Spotify</h1>
+           
             <p></p>
             <p>A faster, more human, way of organizing which of your songs are in which of your playlists.</p>
             <p>This application allows you to place your currently playing song into any number of your playlists, without all the menuing.</p>
-
-            <button id="loginButton" style="width: 150px; margin-top: 20vh; margin-right: 5vh; float:right">Login</button>
-            <div class="guard"></div>
+            <!--width: 150px; margin-top: 20vh; margin-right: 5vh; float:right-->
+            <button id="loginButton" class="" style="">Login</button>
+            
+            </div>
         </div>
 
         <div id="playlistsView" class="container mb-3" id="" style="display: none">
-            <h1>Playlist Organizer</h1>
+            <h1 class= "pt-5 mb-2">Playlist Organizer</h1>
             <p id="playSomething">Play something on Spotify!</p>
             <div id="tips">
                 <h1 class="pt-3 mb-2">How to:</h1>

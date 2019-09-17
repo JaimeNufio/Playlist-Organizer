@@ -66,7 +66,10 @@ if (access_token && (state == null || state !== storedState)) {
             success: function(response) {
 
                 console.log("logged in.");
+                console.log(response)
                 loggedIn = true;
+                $("#username").html(response['display_name']);
+                $("#pfp").attr("src",response['images'][0]['url']);
                 $("#loginPage").hide();
                 $("#playlistsView").show();
                 $("#playlistList").show();

@@ -16,6 +16,21 @@ footer {
     color: #FFF;
 }
 
+i.fas.ti{
+    font-size: 1.2em;
+    padding-left: 2px; 
+    padding-right:10px;
+}
+
+a.name{
+    font-size:1.7em;
+}
+
+i.name{
+    font-size: .7em;
+    padding-left:2px; 
+}
+
 #login {
     display: none;
 }
@@ -59,6 +74,10 @@ footer {
     bottom: 0pt;
     left: 0pt;
     z-index: 50;
+}
+
+.hide{
+    display: none;
 }
 
 .footer-contents {
