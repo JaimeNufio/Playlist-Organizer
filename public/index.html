@@ -20,9 +20,9 @@
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <a class="name navbar-brand " href="#">Nufi<i class="name fas fa-compact-disc"></i></a>
-            
-            <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse" 
-            data-target="#navbarCollapse" aria-controls="navbarCollapse" 
+
+            <button class="navbar-toggler collapsed ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse"
             aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars"></i>
             </button>
@@ -30,22 +30,26 @@
 
             <div class="navbar-collapse collapse" id ="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-music"></i>Playlists</a></li>
-                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-guitar"></i>Song Info</a></li>
-                    <li class="nav-item "><a class="ml-2 nav-link"><i class="mr-2 ti fas fa-portrait"></i>Artist Info</a></li>          
+                    <li class="nav-item "><a class=" nav-link"><i class="ml-2 mr-2 ti fas fa-music"></i>Playlists</a></li>
+                    <li class="nav-item "><a class=" nav-link"><i class="ml-2 mr-2 ti fas fa-guitar"></i>Song Info</a></li>
+                    <li class="nav-item "><a class=" nav-link"><i class="ml-2 mr-2 ti fas fa-portrait"></i>Artist Info</a></li>
+              <!--
+                -->
+                </ul>
+                <ul class="navbar-nav ml-auto nav-flex-icons">
                     <li class="nav-item">
-                            <div class="hid" style="height:100%">
-                                    <a id="username" class="float-left ml-3 nav-link active"></a>
-                                    <img id="pfp" class="float-left mr-2 mt-0" style="border-radius:50%;width:42px;height:42px" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
-                                </div>
+                        <div class="" style="height:100%">
+                            <img id="pfp" class="float-left mr-2 rounded-circle z-depth-0"
+                            alt="avatar image" height="35" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
+                            <a id="username" class="hide float-left nav-link active"></a>
+                        </div>
                     </li>
                 </ul>
             </div>
 
-           
             <!--
-                    <li class="nav-item">    
-                    </li>      
+                    <li class="nav-item">
+                    </li>
                 -->
         </div>
         <!--
@@ -54,6 +58,7 @@
         </div>
 
     -->
+
     </nav>
 
     <div id="page-content" class="mt-5 container">
@@ -61,13 +66,13 @@
         <div id="loginPage" class="mb-3 mt-5">
             <div class="">
            <h1 class="mb-2">Some Tools For Spotify</h1>
-           
+
             <p></p>
             <p>A faster, more human, way of organizing which of your songs are in which of your playlists.</p>
             <p>This application allows you to place your currently playing song into any number of your playlists, without all the menuing.</p>
             <!--width: 150px; margin-top: 20vh; margin-right: 5vh; float:right-->
             <button id="loginButton" class="" style="">Login</button>
-            
+
             </div>
         </div>
 
@@ -110,19 +115,26 @@
 
     <footer id="sticky-footer" class="footer bg-dark text-white-50">
         <div class="footer-contents">
-            <p style="float: left;">
-                <img id="currentArt" src="" height="100px" width="100px">
-            </p>
-
-
-            <div class="marqueeOff" style="height:2em; margin-left: 120px; padding-top: 10px;  ">
-                <span style="height:2em;" class="" id="currentTrack"></span>
+            <div style="float: left;">
+                <img id="currentArt" src="" height="100px" width="100px" style="position: relative;text-align: center;">
+                <i id="save" class="ml-auto buttonIcon far fa-kiss-wink-heart" style="padding: 5px 5px 7px 10px; border-radius: 5px; background-color:gray; position: absolute;bottom: -4px;left: -4px; z-index: 5; color:pink"></i>
             </div>
-            <div class="marqueeOff" style="height:2em; font-size: .9em; margin-left:120px; padding-top: 2px">
-                <span style="height:2em;" class="" id="currentAlbum"></span>
-            </div>
-            <div class="marqueeOff" style="height:2em; font-size: .7em; margin-left: 120px; padding-top: 2px">
-                <span style="height:2em;" class="" id="currentArtist"></span>
+            <div>
+                <div class="marqueeOff shortTitleWrap">
+                    <div style="" class="shortTitle" id="currentTrack"></div>
+                </div>
+                <div class="marqueeOff shortTitleWrap">
+                    <div style="" class="shortTitle" id="currentArtist"></div>
+                </div>
+                <div class="marqueeOff hide shortTitleWrap">
+                    <div style="" class="hide shortTitle" id="currentAlbum"></div>
+                </div>
+                <div style="margin-left: 120px; padding-top: 10px; width:28%">
+                    <i id="lastSong" class="buttonIcon fas fa-step-backward"></i>
+                    <i id="pause" class="buttonIcon fas fa-pause"></i> <!---->
+                    <i id="play" class="hide buttonIcon fas fa-play"></i>
+                    <i id="nextSong" class="buttonIcon fas fa-step-forward"></i>
+                </div>
             </div>
         </div>
     </footer>

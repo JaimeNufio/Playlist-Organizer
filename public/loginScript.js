@@ -11,13 +11,15 @@ var scope =
 "user-read-currently-playing " +
 "user-read-playback-state " +
 "playlist-modify-public " +
-"playlist-modify-private ";
+"playlist-modify-private "+
+"user-modify-playback-state "+
+"user-library-read ";
 
 var online = "http://playlists.wezlalabs.com/";
 var localHost = "http://localhost:5000" //"http://localhost:5000"
 
 var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
-var redirect_uri = localHost; 
+var redirect_uri = localHost;
 
 /**
  * Obtains parameters from the hash of the URL

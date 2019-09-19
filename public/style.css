@@ -18,7 +18,7 @@ footer {
 
 i.fas.ti{
     font-size: 1.2em;
-    padding-left: 2px; 
+    padding-left: 2px;
     padding-right:10px;
 }
 
@@ -28,7 +28,7 @@ a.name{
 
 i.name{
     font-size: .7em;
-    padding-left:2px; 
+    padding-left:2px;
 }
 
 #login {
@@ -76,8 +76,15 @@ i.name{
     z-index: 50;
 }
 
+.notSaved{
+    color: #212121 !important;
+}
+.saved{
+    color:pink !important;
+}
+
 .hide{
-    display: none;
+    display: none !important;
 }
 
 .footer-contents {
@@ -259,7 +266,7 @@ i.name{
 /*Marquee Logic*/
 
 .marquee {
-    width: 450px;
+    width: 75%;
     margin: 0 auto;
     white-space: nowrap;
     overflow: hidden;
@@ -277,6 +284,22 @@ i.name{
     animation-play-state: paused
 }
 
+.shortTitle{
+    height:2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.shortTitleWrap{
+    margin-left: 120px; padding-top: 5px; width:50vw; height:1.5em;
+}
+
+.buttonIcon{
+    font-size: 1.65em;
+    padding-right:5px;
+}
 
 /* Make it move */
 

@@ -35,7 +35,7 @@ setInterval(function() {
                 'Authorization': 'Bearer ' + access_token
             },
             success: function(data) {
-                
+
                 if (data == undefined || data == null) {
                     $("#sticky-footer").hide();
                     return;
@@ -60,6 +60,8 @@ setInterval(function() {
                   //console.log("SongObj")
                   //console.log(songObj)
 
+                    playIcon();
+                    isSaved();
                     $("#sticky-footer").show();
                     currentSong = data;
 
@@ -111,7 +113,7 @@ setInterval(function() {
         });
     }
 
-}, 3000);
+}, 500);
 
 
 //Check Playlists
@@ -337,3 +339,154 @@ function getArtistObj() {
         }
     })
 }
+
+function nextSong(){
+    let tag=Math.random();
+    return $.ajax({
+        url:"https://api.spotify.com/v1/me/player/next",
+        type:"POST",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log("next song")
+            play();
+        }
+        ,error: function(data){
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
+}
+
+function lastSong(){
+    let tag=Math.random();
+
+    return $.ajax({
+        url:"https://api.spotify.com/v1/me/player/previous",
+        type:"POST",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log("last song")
+            playIcon();
+        }
+        ,error: function(data){
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
+}
+//https://api.spotify.com/v1/me/player/pause
+function pause(){
+    let tag=Math.random();
+
+    return $.ajax({
+        url:"https://api.spotify.com/v1/me/player/pause",
+        type:"PUT",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log("pause song")
+            document.querySelector("#pause").classList.add("hide");
+            document.querySelector("#play").classList.remove("hide");
+        }
+        ,error: function(data){
+
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
+}
+
+function play(){
+    let tag=Math.random();
+
+    return $.ajax({
+        url:"https://api.spotify.com/v1/me/player/play",
+        type:"PUT",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log("play song")
+            document.querySelector("#pause").classList.remove("hide");
+            document.querySelector("#play").classList.add("hide");
+        }
+        ,error: function(data){
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
+}
+
+function isSaved(){
+    tag = Math.random();
+    console.log("https://api.spotify.com/v1/me/albums/contains?ids="+songObj['item']['album']['id'])
+    console.log(songObj)
+    return $.ajax({
+        url:"https://api.spotify.com/v1/me/albums/contains?ids="+songObj['item']['album']['id']+",",
+        type:"GET",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log(songObj['item']['name']);
+            console.log("isSaved")
+            console.log(data);
+
+            if (data[0]==false){
+                console.log("not saved");
+                if (document.getElementById("save").classList.contains("saved")){
+                    document.getElementById("save").classList.remove("saved")
+                }
+                document.getElementById("save").classList.add("notSaved");
+            }else{
+                console.log("saved");
+                console.log(document.getElementById("save").style.color)
+                if (document.getElementById("save").classList.contains("notSaved")){
+                    document.getElementById("save").classList.remove("notSaved")
+                }
+                document.getElementById("save").classList.add("saved");
+            }
+
+        }
+        ,error: function(data){
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
+}
+
+function playIcon(){
+    document.querySelector("#pause").classList.remove("hide");
+    document.querySelector("#play").classList.add("hide");
+}
+
+document.getElementById("nextSong").addEventListener("click",nextSong);
+document.getElementById("lastSong").addEventListener("click",lastSong);
+document.getElementById("play").addEventListener("click",play);
+document.getElementById("pause").addEventListener("click",pause);
+document.getElementById("save").addEventListener("click",isSaved)
