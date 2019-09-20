@@ -309,16 +309,25 @@ i.name{
 
 .barFrame{
     width:100%;
-    background-color: #343a40;
-    margin-bottom:5px;
+    height:3px;
+    margin-top:0px;
+    margin-bottom: 20px;
+}
+
+h5{
+    margin-bottom: 0px;
 }
 
 .bar{
-    width:35%;
+    width:100%;
     background-color:white;
     height:2px;
 }
 
+progress[value]::-webkit-progress-value {
+    transition: width 0.5s;
+    background: White;
+}
 
 /* Make it move */
 

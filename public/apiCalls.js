@@ -65,6 +65,14 @@ setInterval(function() {
 
                     playIcon();
                     isSaved();
+                    audoFeatures();
+
+                    move ("#danceabilityBar",100);
+                    move ("#livenessBar",25);
+                    move ("#tempoBar",20);
+                    move ("#acousticnessBar",75);
+
+
                     $("#sticky-footer").show();
                     currentSong = data;
 
@@ -555,8 +563,42 @@ function addRemove(){
             }
         })
     }
+}
+
+//https://api.spotify.com/v1/audio-features
+function audoFeatures(){
+    let tag=Math.random();
+
+    return $.ajax({
+        url:"https://api.spotify.com/v1/audio-features/?ids="+songObj['item']['id'],
+        type:"GET",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log(data['audio_features'][0]['danceability'])
+            move ("#acousticnessBar",data['audio_features'][0]['acousticness']*100);
+            move ("#danceabilityBar",data['audio_features'][0]['danceability']*100);
+            move ("#energyBar",data['audio_features'][0]['energy']*100);
+        //    move ("#loudnessBar",(60+data['audio_features'][0]['loudness'])*(10/6)*100);
+            move ("#instrumentalnessBar",data['audio_features'][0]['instrumentalness']*100);
+            move ("#livenessBar",data['audio_features'][0]['liveness']*100);
+            move ("#valenceBar",data['audio_features'][0]['valence']*100);
+        //    move ("#tempoBar",data['audio_features'][0]['tempo']*100);
+            move ("#energyBar",data['audio_features'][0]['energy']*100);
+            move ("#speechinessBar",data['audio_features'][0]['speechiness']*100);
 
 
+        }
+        ,error: function(data){
+          console.log("Error on: "+tag);
+          let wait = data.getResponseHeader('Retry-After')
+          setTimeout(function() {
+            console.log("Waited "+wait+" resending "+tag);
+            $.ajax(this);
+          },wait);
+        }
+    })
 }
 
 function playIcon(){

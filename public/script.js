@@ -310,7 +310,25 @@ function checkIfSongInPlaylist(uri) {
 }
 
 
+function move(elem,target) {
 
+    target = Math.floor(target);
+    console.log(`set ${elem} to ${target}`);
+
+    $(elem).val(target);
+
+  }
+
+/*
+  $('#acousticnessBar').data('value', 0);
+  $('#danceabilityBar').data('value', 0);
+  $('#energyBar').data('value', 0);
+  $('#instrumentalnessBar').data('value', 0);
+  $('#livenessBar').data('value', 0);
+  $('#speechinessBar').data('value', 0);
+  $('#valenceBar').data('value', 0);
+  $('#tempoBar').data('value', 0);
+*/
 
 
 //----------------------------------------------------------------
