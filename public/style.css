@@ -4,12 +4,17 @@ body {
     padding-bottom: 200px;
     height: 100% !important;
 }
-
 footer {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
+
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: white;
+}
+
 
 * {
     font-family: 'Montserrat', sans-serif;
@@ -60,6 +65,7 @@ i.name{
 
 #page-content {
     flex: 1 0 auto;
+    height: 75vh;
 }
 
 #sticky-footer {
@@ -77,10 +83,10 @@ i.name{
 }
 
 .notSaved{
-    color: #212121 !important;
+    color: #FFFFFF !important;
 }
 .saved{
-    color:pink !important;
+    color:#FFF !important;
 }
 
 .hide{
@@ -141,7 +147,7 @@ i.name{
 }
 
 .guard {
-    margin-bottom: 150px;
+    margin-bottom: 200px;
 }
 
 .padPlaylist {
@@ -300,6 +306,19 @@ i.name{
     font-size: 1.65em;
     padding-right:5px;
 }
+
+.barFrame{
+    width:100%;
+    background-color: #343a40;
+    margin-bottom:5px;
+}
+
+.bar{
+    width:35%;
+    background-color:white;
+    height:2px;
+}
+
 
 /* Make it move */
 

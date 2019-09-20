@@ -31,9 +31,9 @@ function createNewPlaylistDiv(newPlaylist) {
 
     if (newPlaylist['images'].length > 0){
         newDiv = `
-        <div id="Div_${newPlaylist['uri'].substring(17)}" class="mt-3 col-6 col-md-3 overCard">
+        <div id="Div_${newPlaylist['uri'].substring(17)}" class="mt-3 col-6 col-md-3 overCard notInList">
         <div class="col-sm-12 Card" style="position:relative !important">
-            <img id="Button_${newPlaylist['uri'].substring(17)}" ondblclick="dblc();" 
+            <img id="Button_${newPlaylist['uri'].substring(17)}" ondblclick="dblc();"
             onclick="actionToPlaylist('${newPlaylist['uri'].substring(17)}')" style="z-index: 5;" class="innerCard albumArt" src="${newPlaylist["images"][0]['url']}">
         </div>
         <div id="Name_${newPlaylist['uri'].substring(17)}" class="playlistTitle" style="width:100%; margin:auto">${newPlaylist["name"]}</div>` +
@@ -41,9 +41,9 @@ function createNewPlaylistDiv(newPlaylist) {
         `</div>`;
     }else{
         newDiv = `
-        <div id="Div_${newPlaylist['uri'].substring(17)}" class="mt-3 col-6 col-md-3 overCard">
+        <div id="Div_${newPlaylist['uri'].substring(17)}" class="mt-3 col-6 col-md-3 overCard notInList">
         <div class="col-sm-12 Card" style="position:relative !important">
-            <img id="Button_${newPlaylist['uri'].substring(17)}" ondblclick="dblc();" 
+            <img id="Button_${newPlaylist['uri'].substring(17)}" ondblclick="dblc();"
             onclick="actionToPlaylist('${newPlaylist['uri'].substring(17)}')" style="z-index: 5;" class="innerCard albumArt" src="https://mattymacchiato.com/wp-content/uploads/2019/02/spotify-logo.png">
         </div>
 
@@ -81,7 +81,7 @@ function addNewPlaylistDiv(i) {
         document.querySelector("#playlistHolder").innerHTML;
 
     unpopulate();
-    //  
+    //
 }
 
 //read the JSON, create objects as seen.
@@ -185,17 +185,17 @@ function actionToPlaylist(playlistUri) {
         if (AinB(songObj['item']['uri'].substring(14), spotTrackSet)) {
          //   console.log("This playlist contains the song already.")
             removeSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
-           
+
         } else {
          //   console.log("This playlist does not contain the song already.")
             addSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
-           
+
         }
     }))
 }
 
 function updateSingePlaylistNameArt(playlistURI){
-   
+
     if (songObj == null) {
     //    console.log("No song is playing.");
         return;
@@ -229,7 +229,7 @@ function updateSinglePlaylist(playlistUri) {
       //  console.log(songObj['item']['uri'].substring(14))
         if (AinB(songObj['item']['uri'].substring(14), spotTrackSet)) {
         //    console.log("This playlist contains the song already.")
-        
+
            // removeSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
             if (document.querySelector(`#Div_${playlistUri}`).classList.contains("notInList")) {
                 document.querySelector(`#Div_${playlistUri}`).classList.remove("notInList");
@@ -237,19 +237,19 @@ function updateSinglePlaylist(playlistUri) {
             if (!document.querySelector(`#Div_${playlistUri}`).classList.contains("inList")) {
                 document.querySelector(`#Div_${playlistUri}`).classList.add("inList");
             }
-           
+
 
         } else {
          //   addSongFromPlaylist(songObj['item']['uri'].substring(14), playlistUri);
           //  console.log("This playlist does not contain the song already.")
-     
+
             if (document.querySelector(`#Div_${playlistUri}`).classList.contains("inList")) {
                 document.querySelector(`#Div_${playlistUri}`).classList.remove("inList");
             }
             if (!document.querySelector(`#Div_${playlistUri}`).classList.contains("notInList")) {
                 document.querySelector(`#Div_${playlistUri}`).classList.add("notInList");
             }
-    
+
         }
         spotTrackSet = [];
     }))

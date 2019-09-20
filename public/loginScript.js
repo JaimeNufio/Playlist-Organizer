@@ -1,4 +1,5 @@
 $("#LoginPage").hide();
+$("#user").hide();
 $("#playlistsView").hide();
 $("#playlistList").hide();
 $("#sticky-footer").hide();
@@ -13,7 +14,9 @@ var scope =
 "playlist-modify-public " +
 "playlist-modify-private "+
 "user-modify-playback-state "+
-"user-library-read ";
+"user-library-read "+
+"user-library-modify ";
+
 
 var online = "http://playlists.wezlalabs.com/";
 var localHost = "http://localhost:5000" //"http://localhost:5000"
@@ -77,6 +80,7 @@ if (access_token && (state == null || state !== storedState)) {
                 $("#playlistList").show();
                 $("#playlistListList").show();
                 $("#sticky-footer").hide();
+                $("#user").show();
                 username = response['id'];
 
                 getPlaylistURIs();
