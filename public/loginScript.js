@@ -1,21 +1,27 @@
 $("#LoginPage").hide();
 $("#user").hide();
-$("#playlistsView").hide();
-$("#playlistList").hide();
+
+//$("#playlistsView").hide();
+//$("#playlistList").hide();
+
 $("#sticky-footer").hide();
+
+$("#playlistOrganizer").hide();
+$("#songInfo").hide();
+$("#artistInfo").hide();
 
 var stateKey = 'spotify_auth_state';
 var loggedIn = false;
 var currentSong = null;
 var scope =
-"playlist-read-private " +
-"user-read-currently-playing " +
-"user-read-playback-state " +
-"playlist-modify-public " +
-"playlist-modify-private "+
-"user-modify-playback-state "+
-"user-library-read "+
-"user-library-modify ";
+    "playlist-read-private " +
+    "user-read-currently-playing " +
+    "user-read-playback-state " +
+    "playlist-modify-public " +
+    "playlist-modify-private " +
+    "user-modify-playback-state " +
+    "user-library-read " +
+    "user-library-modify ";
 
 
 var online = "http://playlists.wezlalabs.com/";
@@ -74,13 +80,19 @@ if (access_token && (state == null || state !== storedState)) {
                 console.log(response)
                 loggedIn = true;
                 $("#username").html(response['display_name']);
-                $("#pfp").attr("src",response['images'][0]['url']);
+                $("#pfp").attr("src", response['images'][0]['url']);
                 $("#loginPage").hide();
+
+
                 $("#playlistsView").show();
                 $("#playlistList").show();
                 $("#playlistListList").show();
-                $("#sticky-footer").hide();
+                $("#playlistOrganizer").show();
+                $("#songInfo").show();
+                $("#artistInfo").show();
+                $("#sticky-footer").show();
                 $("#user").show();
+
                 username = response['id'];
 
                 getPlaylistURIs();
@@ -97,7 +109,7 @@ if (access_token && (state == null || state !== storedState)) {
     document.getElementById('loginButton').addEventListener('click', function() {
 
 
-            //'http://www.spotifystats.com/'; // Your redirect uri
+        //'http://www.spotifystats.com/'; // Your redirect uri
 
         var state = generateRandomString(16);
 
