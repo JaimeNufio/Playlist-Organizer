@@ -41,6 +41,12 @@ setInterval(function() {
 
                 if (data == undefined || data == null) {
                     $("#sticky-footer").hide();
+                    $("#playlistsView").hide();
+                    $("#playlistList").hide();
+                    $("#playlistListList").hide();
+                    $("#playlistOrganizer").hide();
+                    $("#songInfo").hide();
+                    $("#artistInfo").hide();
                     return;
                 }
 
@@ -63,17 +69,20 @@ setInterval(function() {
                     //console.log("SongObj")
                     //console.log(songObj)
 
+                    $("#playlistsView").show();
+                    $("#playlistList").show();
+                    $("#playlistListList").show();
+                    $("#playlistOrganizer").show();
+                    $("#songInfo").show();
+                    $("#artistInfo").show();
+
                     playIcon();
                     isSaved();
-                    audoFeatures();
+                    audioFeatures();
                     getArtist();
                     getRelatedArtists()
                     getArtistBlurb();
 
-                    move("#danceabilityBar", 100);
-                    move("#livenessBar", 25);
-                    move("#tempoBar", 20);
-                    move("#acousticnessBar", 75);
 
 
                     $("#sticky-footer").show();
@@ -119,6 +128,8 @@ setInterval(function() {
                         updateSinglePlaylist(knownPlaylists[i]);
                         updateSingePlaylistNameArt(knownPlaylists[i]);
                     }
+                } else {
+
                 }
             },
             error: function(err) {
@@ -210,6 +221,11 @@ function getPlaylistURIs() {
         success: function(data) {
                 // console.log(data)
                 playlistJSON = (data);
+                populate();
+                $("#populated").collapse('hide');
+                $("#populated").collapse('hide');
+                $("#populated").collapse('hide');
+
             }
             //retry
             ,
@@ -572,7 +588,7 @@ function addRemove() {
 }
 
 //https://api.spotify.com/v1/audio-features
-function audoFeatures() {
+function audioFeatures() {
     let tag = Math.random();
 
     return $.ajax({
@@ -593,6 +609,7 @@ function audoFeatures() {
             //    move ("#tempoBar",data['audio_features'][0]['tempo']*100);
             move("#energyBar", data['audio_features'][0]['energy'] * 100);
             move("#speechinessBar", data['audio_features'][0]['speechiness'] * 100);
+
         },
         error: function(data) {
             console.log("Error on: " + tag);
@@ -642,6 +659,7 @@ function getTopTracks() {
             'Authorization': 'Bearer ' + access_token
         },
         success: function(data) {
+            console.log("Top Songs")
             console.log(data)
                 // Shuffle array
             updateTopTracks(data);
@@ -670,6 +688,143 @@ function getRelatedArtists() {
                 // Shuffle array
             updateRelatedArtists(data);
 
+        },
+        error: function(data) {
+            console.log("Error on: " + tag);
+            let wait = data.getResponseHeader('Retry-After')
+            setTimeout(function() {
+                console.log("Waited " + wait + " resending " + tag);
+                $.ajax(this);
+            }, wait);
+        }
+    })
+}
+
+function playRandomTopTrack(artistId) {
+    $.when(getTopTracksFromArtist(artistId)).done(function() {
+        console.log(TopTracksofArtist)
+        let rand = TopTracksofArtist['tracks'][Math.floor(Math.random() * TopTracksofArtist['tracks'].length)];
+        $.when(getAlbumTracks(rand['album']['id'])).done(function() {
+            playTrackFromAlbum(rand['id'], rand['album']['id']);
+        });
+    })
+}
+
+function playTrackFromAlbum(trackId, albumId) {
+    let pos = 0;
+    console.log(AlbumTracks)
+    $.when(getAlbumTracks(albumId)).done(function() {
+        console.log(AlbumTracks['items'].length + "# songs")
+        for (let i = 0; AlbumTracks['items'].length; i++) {
+            console.log(`Comparing: ${AlbumTracks['items'][i]['id']} and ${trackId} `)
+            if (AlbumTracks['items'][i]['id'] == trackId) {
+                console.log("match at position " + i)
+                pos = i;
+                AlbumTracks = {};
+
+                body = JSON.stringify({
+                    "context_uri": "spotify:album:" + albumId,
+                    "offset": {
+                        "position": pos
+                    },
+                    "position_ms": 0
+                });
+
+                return $.ajax({
+                    url: "https://api.spotify.com/v1/me/player/play",
+                    type: "PUT",
+                    headers: {
+                        'Authorization': 'Bearer ' + access_token
+                    },
+                    data: body,
+                    success: function(data) {
+                        console.log("play song")
+                        document.querySelector("#pause").classList.remove("hide");
+                        document.querySelector("#play").classList.add("hide");
+                        AlbumTracks = {};
+                    },
+                    error: function(data) {
+                        console.log("Error on: " + tag);
+                        let wait = data.getResponseHeader('Retry-After')
+                        setTimeout(function() {
+                            console.log("Waited " + wait + " resending " + tag);
+                            $.ajax(this);
+                        }, wait);
+                    }
+                })
+
+
+            }
+        }
+    })
+
+
+
+}
+
+var TopTracksofArtist = {};
+
+function getTopTracksFromArtist(ArtistId) {
+    return $.ajax({
+        url: "https://api.spotify.com/v1/artists/" + ArtistId + "/top-tracks?country=US",
+        type: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log("Top Songs for " + ArtistId)
+            console.log(data)
+            TopTracksofArtist = data;
+            // Shuffle array
+            // updateTopTracks(data);
+        },
+        error: function(data) {
+            console.log("Error on: " + tag);
+            let wait = data.getResponseHeader('Retry-After')
+            setTimeout(function() {
+                console.log("Waited " + wait + " resending " + tag);
+                $.ajax(this);
+            }, wait);
+        }
+    })
+}
+
+var ArtistAlbums = {};
+
+//Return all the albums
+function getArtistsAlbums(ArtistId) {
+    ArtistAlbums = {};
+    $.ajax({
+        url: "https://api.spotify.com/v1/artists/" + ArtistId + "/albums?include_groups=album",
+        type: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            ArtistAlbums = data;
+            console.log(ArtistAlbums)
+        },
+        error: function(data) {
+            console.log("Error on: " + tag);
+            let wait = data.getResponseHeader('Retry-After')
+            setTimeout(function() {
+                console.log("Waited " + wait + " resending " + tag);
+                $.ajax(this);
+            }, wait);
+        }
+    })
+}
+
+function getAlbumTracks(albumId) {
+    return $.ajax({
+        url: "https://api.spotify.com/v1/albums/" + albumId + "/tracks",
+        type: "GET",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+            console.log(data)
+            AlbumTracks = data;
         },
         error: function(data) {
             console.log("Error on: " + tag);

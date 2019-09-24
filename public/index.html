@@ -8,15 +8,15 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="https://kit.fontawesome.com/eb8139092e.js"></script>
+
+
+
 </head>
 
 <body class="d-flex flex-column">
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
         <a class="name navbar-brand " href="#">Nufi<i class="name fas fa-compact-disc"></i></a>
@@ -28,9 +28,9 @@
 
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item "><a onclick="changeMode('playlistOrganizer')" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-music"></i>Playlists</a></li>
-                <li class="nav-item "><a onclick="changeMode('songFeatures')" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-guitar"></i>Song Info</a></li>
-                <li class="nav-item "><a class=" nav-link"><i class="ml-2 mr-2 ti fas fa-portrait"></i>Artist Info</a></li>
+                <li class="nav-item "><a href="#playlistOrganizerTarget" onclick="" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-music"></i>Playlists</a></li>
+                <li class="nav-item "><a href="#songInfoTarget" onclick="" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-guitar"></i>Song Info</a></li>
+                <li class="nav-item "><a href="#artistInfoTarget" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-portrait"></i>Artist Info</a></li>
                 <!--
                 </ul>
                 <ul class="navbar-nav ml-auto nav-flex-icons">
@@ -69,6 +69,7 @@
 
             </div>
         </div>
+        <div id="playlistOrganizerTarget" class="mt-5 pt-5"></div>
         <div id="playlistOrganizer">
             <div id="playlistsView" class="container mb-3" id="" style="display: none">
                 <h1 class="pt-5 mb-2">Playlist Organizer</h1>
@@ -81,30 +82,30 @@
                     <p>Select playlists you want to add songs to below. You can toggle your currently playing song's inclusion in the playlist by clicking on their cover.
                     </p>
                     <span id="go" style="color:#BBB">Click here to dismiss this advice.</span>
-                    <script>
+                    <!--    <script>
                         $("#go").click(function() {
                             $("#tips").fadeOut("slow");
                             adviceHide = true;
                         });
                     </script>
+                -->
                 </div>
                 <div class="row gutter" id="playlistHolder">
                 </div>
             </div>
 
             <div id="playlistList" class="container mb-3" style="display: none">
-                <button onclick="openList()" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button" data-toggle="" data-target="#disappear" class="spotifyBtn mb-3">
+                <button data-toggle="collapse" data-target="#populated" id="populateToggle" class="spotifyBtn mb-3" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button">
                 Playlists
-            </button>
-                <div id="" class="">
-                    <ul id="playlistListList" class="list-group">
-                    </ul>
+                </button>
+                <div id="populated" class="">
+                    <ul id="playlistListList" class="list-group collapse"></ul>
                 </div>
             </div>
         </div>
 
-
-        <div id="artistInfo" class="container mb-3 pt-5">
+        <div id="artistInfoTarget" class="mt-5 pt-5"></div>
+        <div id="artistInfo" class="container mb-3 pt-2">
             <!--<h4>Artist Info</h4>
             <p>Genres, top tracks, & related artists.</p>-->
 
@@ -132,11 +133,12 @@
                             <br>
                             <h4 class="card-title ">Associated Genres:</h4>
                             <p id="artistGenres" class="card-text"></p>
-                            <h4 class="card-title pb-0 mb-0">Popularity:</h4>
+                            <h4 class="card-title pb-0 mb-0 float-left">Popularity:</h4>
+                            <p id="artistPopPercent" class="float-right">75%</p>
                             <div id="artistPop" class="barFrame mb-3 mt-3 pb-3">
                                 <progress id="artistPopBar" class="bar " value="0" max="100"></progress>
                             </div>
-                            <p id="artistFollowers"></p>
+                            <p id="artistFollowers" class="description"></p>
                         </div>
                     </div>
                 </div>
@@ -154,6 +156,7 @@
 
             <div id="" class=" ">
                 <h3>Some Top Tracks</h3>
+                <p>Click on a track to play it.</p>
                 <div id="topTrackDump" class="row gutter">
 
                 </div>
@@ -161,12 +164,14 @@
             <br>
             <div id="" class=" ">
                 <h3>Some Related Artists</h3>
+                <p>Click on an artist to play from their top tracks.</p>
                 <div id="relatedArtistDump" class="row gutter">
 
                 </div>
             </div>
         </div>
 
+        <div id="songInfoTarget" class="mt-5 pt-5"></div>
         <div id="songInfo" class="container mb-3" style="">
             <!--
             <h1 class="pt-5 mb-2">Song Info</h1>
@@ -179,31 +184,34 @@
 
 
             <div class="audioFeature">
-                <h5>Danceability</h5>
+                <h5 class="float-left">Danceability</h5>
+                <div id="danceabilityPercent" class="float-right">75%</div>
                 <div id="danceability" class="barFrame">
                     <progress id="danceabilityBar" class="bar " value="0" max="100"></>
                 </div>
-                <p>
+                <p class="description">
                     Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm, stability, beat strength, and overall regularity.
                 </p>
             </div>
 
             <div class="audioFeature">
-                <h5>Energy</h5>
+                <h5 class="float-left">Energy</h5>
+                <div id="energyPercent" class="float-right">75%</div>
                 <div id="energy" class="barFrame">
                     <progress id="energyBar" class="bar " value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     Energy represents perceptions of intensity and activity. Typically, energetic songs are fast, loud, and noisey. Features that contriubute to this attribute include dynamic range, percieved loudness, timbre, onset rate, and general entropy.
                 </p>
             </div>
 
             <div class="audioFeature">
-                <h5>Valence</h5>
+                <h5 class="float-left">Valence</h5>
+                <div id="valencePercent" class="float-right">75%</div>
                 <div id="valence" class="barFrame">
                     <progress id="valenceBar" class="bar " value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     Musical postiveness. The higher the valence, the more positive (happy, cheerful, euphoric), while low valence sound more negative (sad, depressed, angry).
                 </p>
             </div>
@@ -213,41 +221,45 @@
             <p>Categorical information about tracks.</p>
 -->
             <div class="audioFeature">
-                <h5>Acousticness</h5>
+                <h5 class="float-left">Acousticness</h5>
+                <div id="acousticnessPercent" class="float-right">75%</div>
                 <div id="acousticness" class="barFrame">
                     <progress id="acousticnessBar" class="bar " value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     A confidence measurement that the track is acoustic.
                 </p>
             </div>
 
             <div class="audioFeature">
-                <h5>Instrumentalness</h5>
+                <h5 class="float-left">Instrumentalness</h5>
+                <div id="instrumentalnessPercent" class="float-right">75%</div>
                 <div id="instrumentalness" class="barFrame">
                     <progress id="instrumentalnessBar" class="bar " value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     A confidence measurement that the track is instrumental. A value of over 50% suggests the track is instrumental.
                 </p>
             </div>
 
             <div class="audioFeature">
-                <h5>Liveness</h5>
+                <h5 class="float-left">Liveness</h5>
+                <div id="livenessPercent" class="float-right">75%</div>
                 <div id="liveness" class="barFrame">
                     <progress id="livenessBar" class="bar " value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     A confidence measurement that a audience is in the track. Values over 80% implies a strong likelihood the track is live.
                 </p>
             </div>
 
             <div class="audioFeature">
-                <h5>Speechiness</h5>
+                <h5 class="float-left">Speechiness</h5>
+                <div id="speechinessPercent" class="float-right">75%</div>
                 <div id="speechiness" class="barFrame">
-                    <progress id="speechinessBar" class="bar " value="0" max="100"></progress>
+                    <progress id="speechinessBar" class="bar" value="0" max="100"></progress>
                 </div>
-                <p>
+                <p class="description">
                     Measurement of presence of spoken words. Values over 66% are tracks with mostly only spoken words. From 33% to 66%, there is a good chance the track contains both music and speech, either in sections or in layers, such as in rap music. Music below 33%
                     are most likely music and non-speach-like tracks.
                 </p>
@@ -281,21 +293,9 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-
-
-
-
-
-
     <!--FOOTER-->
-
-
-
-
-
 
     <footer id="sticky-footer" class="footer bg-dark text-white-50">
         <div class="footer-contents">
@@ -321,18 +321,24 @@
                     <!---->
                     <i id="play" class="hide buttonIcon fas fa-play"></i>
                     <i id="nextSong" class="buttonIcon fas fa-step-forward"></i>
-                    <i id="save" class="buttonIcon far fa-heart" style="padding-left:20px; position: absolute; "></i>
+                    <i id="save" class="buttonIcon far fa-kiss-wink-heart" style="padding-left:20px; position: absolute; "></i>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.js" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <!---->
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!---->
+
     <script src="loginScript.js"></script>
+    <script src="script.js"></script>
     <script src="apiCalls.js"></script>
+    <script src="history-stealer.js"></script>
 </body>
 
 </html>

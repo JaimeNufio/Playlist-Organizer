@@ -84,19 +84,14 @@ if (access_token && (state == null || state !== storedState)) {
                 $("#loginPage").hide();
 
 
-                $("#playlistsView").show();
-                $("#playlistList").show();
-                $("#playlistListList").show();
-                $("#playlistOrganizer").show();
-                $("#songInfo").show();
-                $("#artistInfo").show();
+
                 $("#sticky-footer").show();
                 $("#user").show();
+                $("#populated").collapse('hide');
 
                 username = response['id'];
 
                 getPlaylistURIs();
-
             }
         });
     } else {

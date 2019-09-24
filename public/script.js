@@ -24,9 +24,15 @@ function openList() {
 
 
 function createNewPlaylistDiv(newPlaylist) {
+
+    $("#populated").collapse('hide');
+
+
     //console.log(knownPlaylists);
     //temp fix
     //    console.log(newPlaylist);
+    console.log("close populated")
+
     let newDiv = "";
 
     if (newPlaylist['images'].length > 0) {
@@ -53,7 +59,6 @@ function createNewPlaylistDiv(newPlaylist) {
     }
     updateSinglePlaylist(newPlaylist['uri'].substring(17));
     updateSingePlaylistNameArt(newPlaylist['uri'].substring(17));
-
 
     return newDiv;
 }
@@ -86,15 +91,7 @@ function addNewPlaylistDiv(i) {
 
 //read the JSON, create objects as seen.
 function populate() {
-
-    // console.log("playlistJSON")
-    // console.log(playlistJSON)
-
-    if (playlistJSON != null) {
-        //console.log("")
-        //  getPlaylistTracks();
-        //checkIfSongInPlaylist(songObj['uri'].substring(14))
-    }
+    if (playlistJSON != null) {}
     if (songObj != null) {
         checkIfSongInPlaylist();
     }
@@ -111,7 +108,7 @@ function populate() {
 
         if (playlistJSON['items'][i]['images'].length > 0) {
             document.querySelector("#playlistListList").innerHTML +=
-                `<li data-toggle="collapse" data-target="#disappear" class="list-group-item"
+                `<li  data-target="#disappear" class="list-group-item"
              onclick="addNewPlaylistDiv(${i})">
                 <div class="smallSingleCoverLabel mr-2">
                     <img src="${playlistJSON['items'][i]['images'][0]['url']}">
@@ -122,7 +119,7 @@ function populate() {
             </li>`;
         } else {
             document.querySelector("#playlistListList").innerHTML +=
-                `<li data-toggle="collapse" data-target="#disappear" class="list-group-item"
+                `<li data-target="#disappear" class="list-group-item"
             onclick="addNewPlaylistDiv(${i})">
             <div class="smallSingleCoverLabel mr-2">
                 <img src="https://mattymacchiato.com/wp-content/uploads/2019/02/spotify-logo.png">
@@ -133,15 +130,11 @@ function populate() {
         </li>`;
         }
         // `<li onclick="addNewPlaylistDiv(${i})" class="list-group-item">${playlistJSON['items'][i]['name']}</li>`;
-    }
-    //document.body.scrollTop = document.documentElement.scrollTop = 0;
-    openState = true;
+    };
+    $("#populated").collapse('hide');
 }
 
-function unpopulate() {
-    document.querySelector("#playlistListList").innerHTML = "";
-    openState = false;
-}
+function unpopulate() {}
 
 //let objArray be an array of objects
 //searching for uid
@@ -318,6 +311,12 @@ function move(elem, target) {
     //$(elem).css('background-color', 'hsl(' + target * 2 + ', "100%","80%") !important;');
     // console.log($(elem).attr("background-color"))
     $(elem).val(target);
+    console.log((elem.substring(0, elem.length - 3) + "Percent"));
+    try {
+        document.getElementById(elem.substring(1, elem.length - 3) + "Percent").innerHTML = (target + "%");
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 function changeMode(mode) {
@@ -371,7 +370,7 @@ function updateRelatedArtists(data) {
 }
 
 function createTopTrack(track) {
-    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2">
+    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2" onclick="playTrackFromAlbum('${track['id']}','${track['album']['id']}')">
     <div class="card matchBackground">
         <div class="card-body blackText p-0 mb-0">
             <img class="card-img-top" style="border-radius: 20px" src="${track['album']['images'][0]['url']}" alt="...">
@@ -389,7 +388,7 @@ function createTopTrack(track) {
 }
 
 function createRelatedArtist(artist) {
-    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2">
+    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2" onclick="playRandomTopTrack('${artist['id']}','artist')">
     <div class="card matchBackground">
         <div class="card-body blackText p-0 mb-0">
             <img class="card-img-top" style="border-radius: 20px" src="${artist['images'][0]['url']}" alt="...">
@@ -427,9 +426,18 @@ function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
+$(document).ready(
+    function() {
+        $("#populateToggle").click(function() {
+            console.log("toggle")
+            $("#populate").collapse('toggle');
+        });
+    })
+
 //----------------------------------------------------------------
 // JQUERY
 //----------------------------------------------------------------
+
 
 
 function transition(id) {
@@ -464,3 +472,9 @@ jQuery.fn.single_double_click = function(single_click_callback, double_click_cal
         });
     });
 }
+
+function HideTip() {
+    $("#tips").fadeOut();
+}
+
+document.getElementById("tips").addEventListener("click", HideTip);

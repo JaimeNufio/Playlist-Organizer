@@ -368,6 +368,10 @@ h5 {
     height: 2px;
 }
 
+.description {
+    padding-top: 35px;
+}
+
 progress[value]::-webkit-progress-value {
     transition: width 0.5s;
 }
