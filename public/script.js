@@ -10,7 +10,7 @@ var username;
 var playlistJSON = null;
 var openState = false;
 
-
+/*
 function openList() {
     $("#playlistListList").show();
     //  console.log("open")
@@ -21,7 +21,7 @@ function openList() {
         unpopulate();
     }
 }
-
+*/
 
 function createNewPlaylistDiv(newPlaylist) {
 
@@ -108,7 +108,7 @@ function populate() {
 
         if (playlistJSON['items'][i]['images'].length > 0) {
             document.querySelector("#playlistListList").innerHTML +=
-                `<li  data-target="#disappear" class="list-group-item"
+                `<li   class="list-group-item"
              onclick="addNewPlaylistDiv(${i})">
                 <div class="smallSingleCoverLabel mr-2">
                     <img src="${playlistJSON['items'][i]['images'][0]['url']}">
@@ -119,7 +119,7 @@ function populate() {
             </li>`;
         } else {
             document.querySelector("#playlistListList").innerHTML +=
-                `<li data-target="#disappear" class="list-group-item"
+                `<li  class="list-group-item"
             onclick="addNewPlaylistDiv(${i})">
             <div class="smallSingleCoverLabel mr-2">
                 <img src="https://mattymacchiato.com/wp-content/uploads/2019/02/spotify-logo.png">

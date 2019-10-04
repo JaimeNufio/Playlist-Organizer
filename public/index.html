@@ -55,7 +55,7 @@
     </nav>
 
     <div id="page-content" class="mt-5 container">
-
+        <div id="playlistOrganizerTarget"></div>
         <div id="loginPage" class="mb-3 mt-5">
             <div class="">
                 <h1 class="mb-2">Some Tools For Spotify</h1>
@@ -69,13 +69,19 @@
 
             </div>
         </div>
-        <div id="playlistOrganizerTarget" class="mt-5 pt-5"></div>
+
+        
+        <div id ="playSomething" class="container">
+            <h1 class="pt-5 mb-2">Open Spotify</h1>
+            <div id="" class="">
+                <p style="">Play something in your spotify app to get started.<br>Or if it is open and playing, trying skipping to the next song.</p>
+            </div>
+        </div>
+    
+        <div id="" class=""></div>
         <div id="playlistOrganizer">
             <div id="playlistsView" class="container mb-3" id="" style="display: none">
                 <h1 class="pt-5 mb-2">Playlist Organizer</h1>
-                <div id="playSomething" class="">
-                    <p style="color:red">You need to open Spotify and play some music to get started!</p>
-                </div>
                 <div id="tips">
                     <h1 class="pt-3 mb-2 hide">How to:</h1>
                     <p></p>
@@ -99,7 +105,21 @@
                 Playlists
                 </button>
                 <div id="populated" class="">
-                    <ul id="playlistListList" class="list-group collapse"></ul>
+                    <ul id="playlistListList" class="list-group collapse">
+
+                        <!---->
+                        <li class="list-group-item"
+                        onclick="addNewPlaylistDiv(fdfd)">
+                           <div class="smallSingleCoverLabel mr-2">
+                               <img src="${playlistJSON['items'][i]['images'][0]['url']}">
+                           </div>
+                           <div class="pt-2" style="color:black;">
+                               ${playlistJSON['items'][i]['name']}
+                           </div>
+                       </li>
+                       <!---->
+
+                    </ul>
                 </div>
             </div>
         </div>

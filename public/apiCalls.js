@@ -788,7 +788,7 @@ function getTopTracksFromArtist(ArtistId) {
         }
     })
 }
-
+var AlbumTracks = {};
 var ArtistAlbums = {};
 
 //Return all the albums
@@ -851,10 +851,20 @@ function getArtistBlurb() {
 
 
     xhr.onload = function() {
-        if (xhr.status != 200) {} else { // show the result
+        if (xhr.status != 200) {
+            document.getElementById("artistBio").innerHTML="None Provided.";
+        } else { // show the result
             var result = xhr.response.match(/(?<=Biography:\s+).*?(?=\s+Monthly Listeners:)/gs);
-            console.log(result[0].slice(0, -1))
-            document.getElementById("artistBio").innerHTML = result[0].slice(0, -1)
+            result = result[0].slice(0, -1);
+            console.log(result)
+
+            if (result!="" || result==null || result == undefined){
+                document.getElementById("artistBio").innerHTML = result
+            }else{
+                document.getElementById("artistBio").innerHTML="(None Provided to Spotify)";
+                
+
+            }
         }
     };
 
