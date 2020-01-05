@@ -70,14 +70,14 @@
             </div>
         </div>
 
-        
-        <div id ="playSomething" class="container">
+
+        <div id="playSomething" class="container">
             <h1 class="pt-5 mb-2">Open Spotify</h1>
             <div id="" class="">
                 <p style="">Play something in your spotify app to get started.<br>Or if it is open and playing, trying skipping to the next song.</p>
             </div>
         </div>
-    
+
         <div id="" class=""></div>
         <div id="playlistOrganizer">
             <div id="playlistsView" class="container mb-3" id="" style="display: none">
@@ -101,23 +101,22 @@
             </div>
 
             <div id="playlistList" class="container mb-3" style="display: none">
-                <button data-toggle="collapse" data-target="#populated" id="populateToggle" class="spotifyBtn mb-3" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button">
+                <button onclick="populate()" data-toggle="collapse" data-target="#populated" id="populateToggle" class="spotifyBtn mb-3" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button">
                 Playlists
                 </button>
                 <div id="populated" class="">
                     <ul id="playlistListList" class="list-group collapse">
 
-                        <!---->
-                        <li class="list-group-item"
-                        onclick="addNewPlaylistDiv(fdfd)">
-                           <div class="smallSingleCoverLabel mr-2">
-                               <img src="${playlistJSON['items'][i]['images'][0]['url']}">
-                           </div>
-                           <div class="pt-2" style="color:black;">
-                               ${playlistJSON['items'][i]['name']}
-                           </div>
-                       </li>
-                       <!---->
+                        <!--
+                        <li class="list-group-item" onclick="addNewPlaylistDiv(fdfd)">
+                            <div class="smallSingleCoverLabel mr-2">
+                                <img src="${playlistJSON['items'][i]['images'][0]['url']}">
+                            </div>
+                            <div class="pt-2" style="color:black;">
+                                ${playlistJSON['items'][i]['name']}
+                            </div>
+                        </li>
+                        -->
 
                     </ul>
                 </div>

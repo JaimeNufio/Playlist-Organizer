@@ -1,6 +1,6 @@
 $("#LoginPage").hide();
 $("#user").hide();
-
+$("#playSomething").hide();
 //$("#playlistsView").hide();
 //$("#playlistList").hide();
 
@@ -82,9 +82,7 @@ if (access_token && (state == null || state !== storedState)) {
                 $("#username").html(response['display_name']);
                 $("#pfp").attr("src", response['images'][0]['url']);
                 $("#loginPage").hide();
-
-
-
+                //  $("playSomething").show();
                 $("#sticky-footer").show();
                 $("#user").show();
                 $("#populated").collapse('hide');

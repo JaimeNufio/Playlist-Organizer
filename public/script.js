@@ -85,30 +85,70 @@ function addNewPlaylistDiv(i) {
     document.querySelector("#playlistHolder").innerHTML = createNewPlaylistDiv(playlistJSON['items'][i]) +
         document.querySelector("#playlistHolder").innerHTML;
 
-    unpopulate();
-    //
 }
 
 //read the JSON, create objects as seen.
 function populate() {
-    if (playlistJSON != null) {}
-    if (songObj != null) {
-        checkIfSongInPlaylist();
-    }
-
-    for (let i = 0; i < playlistJSON['items'].length; i++) {
-        // console.log("collaborative: " + playlistJSON['items'][i]['collaborative'])
-        // console.log("playlist owner: " + playlistJSON['items'][i]['owner']['id'])
-
-        if (playlistJSON['items'][i]['owner']['id'] != username) {
-            if (playlistJSON['items'][i]['collaborative'] == false) {
-                continue;
-            }
+    unpopulate();
+    $.when(getPlaylistURIs()).done(function() {
+        if (playlistJSON != null) {}
+        if (songObj != null) {
+            checkIfSongInPlaylist();
         }
 
-        if (playlistJSON['items'][i]['images'].length > 0) {
-            document.querySelector("#playlistListList").innerHTML +=
-                `<li   class="list-group-item"
+        for (let i = 0; i < playlistJSON['items'].length; i++) {
+            // console.log("collaborative: " + playlistJSON['items'][i]['collaborative'])
+            // console.log("playlist owner: " + playlistJSON['items'][i]['owner']['id'])
+
+            if (playlistJSON['items'][i]['owner']['id'] != username) {
+                if (playlistJSON['items'][i]['collaborative'] == false) {
+                    continue;
+                }
+            }
+
+            if (playlistJSON['items'][i]['images'].length > 0) {
+                document.querySelector("#playlistListList").innerHTML += `
+                <div class="row" onclick="addNewPlaylistDiv(${i})">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2  my-auto">
+                                    <img id="" class="smallSingleCoverLabel my-auto" src="${playlistJSON['items'][i]['images'][0]['url']}" alt="sans" width="200px">
+                                </div>
+                                <div class="col-10 my-auto">
+                                    <p id="" style="float:left; color:black" class="pl-4 card-title my-auto"> ${playlistJSON['items'][i]['name']}</p>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            } else {
+                document.querySelector("#playlistListList").innerHTML += `
+                <div class="row" onclick="addNewPlaylistDiv(${i})">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2  my-auto">
+                                    <img id="" class="smallSingleCoverLabel my-auto" src="https://mattymacchiato.com/wp-content/uploads/2019/02/spotify-logo.png" alt="sans" width="200px">
+                                </div>
+                                <div class="col-10 my-auto">
+                                    <p id="" style="float:left; color:black" class="pl-4 card-title my-auto"> ${playlistJSON['items'][i]['name']}</p>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            }
+
+
+            /* document.querySelector("#playlistListList").innerHTML +=
+                    `<li   class="list-group-item"
              onclick="addNewPlaylistDiv(${i})">
                 <div class="smallSingleCoverLabel mr-2">
                     <img src="${playlistJSON['items'][i]['images'][0]['url']}">
@@ -117,9 +157,9 @@ function populate() {
                     ${playlistJSON['items'][i]['name']}
                 </div>
             </li>`;
-        } else {
-            document.querySelector("#playlistListList").innerHTML +=
-                `<li  class="list-group-item"
+            } else {
+                document.querySelector("#playlistListList").innerHTML +=
+                    `<li  class="list-group-item"
             onclick="addNewPlaylistDiv(${i})">
             <div class="smallSingleCoverLabel mr-2">
                 <img src="https://mattymacchiato.com/wp-content/uploads/2019/02/spotify-logo.png">
@@ -127,14 +167,60 @@ function populate() {
             <div class="pt-2" style="color:black;">
                 ${playlistJSON['items'][i]['name']}
             </div>
-        </li>`;
-        }
-        // `<li onclick="addNewPlaylistDiv(${i})" class="list-group-item">${playlistJSON['items'][i]['name']}</li>`;
-    };
-    $("#populated").collapse('hide');
+        </li>`;*/
+
+            // `<li onclick="addNewPlaylistDiv(${i})" class="list-group-item">${playlistJSON['items'][i]['name']}</li>`;
+        };
+        $("#populated").collapse('hide');
+        // document.querySelector("#makePlaylistTitle").innerHTML = (`Create Playlist from: "${songObj['item']['name']}"`);
+    });
 }
 
-function unpopulate() {}
+function trueUnpopulate() {
+    $("#populated").collapse('hide');
+    document.querySelector("#playlistListList").innerHTML = "";
+}
+
+function unpopulate() {
+    //populate's target 
+
+    if (shouldShowCreateOption) {
+        /*
+        document.querySelector("#playlistListList").innerHTML =
+            `<div id="makePlaylist" class="row" onclick="createPlaylist()">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2  my-auto">
+                                    <img id="playlistMakerImg" class="smallSingleCoverLabel my-auto" src="${songObj['item']['album']['images'][0]['url']}" alt="sans" width="200px">
+                                </div>
+                                <div class="col-10 my-auto">
+                                    <p id="pmakePlaylistTitle" style="float:left; color:black" class="pl-4 card-title my-auto">Create Playlist from: "${songObj['item']['name']}"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+            */
+    }
+    /*
+    `
+        <li class="list-group-item p-0"
+        onclick="">
+            <div class=flex-row flex-wrap">
+                <div class="smallSingleCoverLabel p-2">
+                    <img class="" id="playlistMakerImg" src="${songObj['item']['album']['images'][0]['url']}">
+                </div>
+                <div id="playlistMaker" class="pt-2" style="color:black;">
+                </div>   
+            </div>
+        </li>
+     `
+     */
+    //must be blanked out, but we may as well add the button to create the playlist
+}
 
 //let objArray be an array of objects
 //searching for uid

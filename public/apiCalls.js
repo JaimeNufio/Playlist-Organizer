@@ -3,6 +3,7 @@ var advicehide = false;
 
 var wasNull = true;
 var cap = 20;
+var shouldShowCreateOption = true;
 
 function songInPlaylist(songURI, playlistObject) {
     for (let i = 0; i < playlistObject['items'].length; i++) {
@@ -14,19 +15,17 @@ function songInPlaylist(songURI, playlistObject) {
 }
 
 
-
-$("#playSomething").hide();
-
 //Get Current Song
+//Update Function
 var songObj = null;
 setInterval(function() {
 
-    if (songObj == null && advicehide == true) {
+    if (songObj == null && username != undefined) {
         // console.log("Show advice")
-        $("#playSomething").show();
+        //  $("#playSomething").show();
     } else {
         //console.log("Hide advice")
-        $("#playSomething").hide();
+        //   $("#playSomething").hide();
     }
 
     if (loggedIn) {
@@ -47,7 +46,17 @@ setInterval(function() {
                     $("#playlistOrganizer").hide();
                     $("#songInfo").hide();
                     $("#artistInfo").hide();
+                    $("#playSomething").show();
                     return;
+                } else {
+                    $("#playSomething").hide();
+                    $("#sticky-footer").show();
+                    $("#playlistsView").show();
+                    $("#playlistList").show();
+                    $("#playlistListList").show();
+                    $("#playlistOrganizer").show();
+                    $("#songInfo").show();
+                    $("#artistInfo").show();
                 }
 
                 if (songObj == null || data['item']['uri'] != songObj['item']['uri']) {
@@ -75,6 +84,13 @@ setInterval(function() {
                     $("#playlistOrganizer").show();
                     $("#songInfo").show();
                     $("#artistInfo").show();
+                    shouldShowCreateOption = true;
+
+                    try {
+                        document.querySelector("#playlistMaker").innerHTML = (`Create Playlist from: "${songObj['item']['name']}"`);
+                        $("#playlistMakerImg").attr("src", songObj['item']['album']['images'][0]["url"]);
+
+                    } catch (e) {} finally {}
 
                     playIcon();
                     isSaved();
@@ -142,16 +158,18 @@ setInterval(function() {
 
 
 //Check Playlists
-
+/*
 setInterval(function() {
     //   getAlbumObj();
     if (songObj != null) {
-        for (let i = 0; i < knownPlaylists.length; i++) {
+      //  for (let i = 0; i < knownPlaylists.length; i++) {
             //            updateSinglePlaylist(knownPlaylists[i]);
             //            updateSingePlaylistNameArt(knownPlaylists[i]);
-        }
+    //    }
     }
 }, 500)
+*/
+
 
 function removeSongFromPlaylist(songURI, playlistURI) {
     let tag = Math.random();
@@ -179,6 +197,11 @@ function removeSongFromPlaylist(songURI, playlistURI) {
         }
 
     });
+}
+
+//name convention is better this way, but I don't want to break anything.
+function addSongToPlaylist(songURI, playlistURI) {
+    return addSongFromPlaylist(songURI, playlistURI);
 }
 
 function addSongFromPlaylist(songURI, playlistURI) {
@@ -221,10 +244,9 @@ function getPlaylistURIs() {
         success: function(data) {
                 // console.log(data)
                 playlistJSON = (data);
-                populate();
-                $("#populated").collapse('hide');
-                $("#populated").collapse('hide');
-                $("#populated").collapse('hide');
+                // $("#populated").collapse('hide');
+                // $("#populated").collapse('hide');
+                // $("#populated").collapse('hide');
 
             }
             //retry
@@ -676,6 +698,59 @@ function getTopTracks() {
     })
 }
 
+/*
+{
+  "name": "New Playlist",
+  "description": "New playlist description",
+  "public": false
+}
+*/
+
+function createPlaylist() {
+    let tag = Math.random();
+
+    let dataStuff = {
+        "name": `Inspired from ${songObj['item']['name']}`,
+        "description": "Playlist created through an app by @JaimeNufio.",
+        "public": true
+    };
+
+    dataStuff = JSON.stringify(dataStuff);
+
+    return $.ajax({
+        url: `https://api.spotify.com/v1/users/${username}/playlists`,
+        type: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        data: dataStuff,
+        success: function(data) {
+            console.log(data)
+
+            //Should Work most of the time. If not, :shrug:
+            try {
+                addSongToPlaylist(songObj['item']['id'], data['id']);
+            } catch (e) {
+
+            } finally {
+                //document.querySelector(`#makePlaylist`).remove();
+                trueUnpopulate();
+                shouldShowCreateOption = false;
+
+            }
+        },
+        error: function(data) {
+            console.log("Error on: " + tag);
+            let wait = data.getResponseHeader('Retry-After')
+            setTimeout(function() {
+                console.log("Waited " + wait + " resending " + tag);
+                $.ajax(this);
+            }, wait);
+        }
+    })
+}
+
+
 function getRelatedArtists() {
     return $.ajax({
         url: "https://api.spotify.com/v1/artists/" + songObj['item']['album']['artists'][0]['id'] + "/related-artists",
@@ -852,17 +927,17 @@ function getArtistBlurb() {
 
     xhr.onload = function() {
         if (xhr.status != 200) {
-            document.getElementById("artistBio").innerHTML="None Provided.";
+            document.getElementById("artistBio").innerHTML = "None Provided.";
         } else { // show the result
             var result = xhr.response.match(/(?<=Biography:\s+).*?(?=\s+Monthly Listeners:)/gs);
             result = result[0].slice(0, -1);
             console.log(result)
 
-            if (result!="" || result==null || result == undefined){
+            if (result != "" || result == null || result == undefined) {
                 document.getElementById("artistBio").innerHTML = result
-            }else{
-                document.getElementById("artistBio").innerHTML="(None Provided to Spotify)";
-                
+            } else {
+                document.getElementById("artistBio").innerHTML = "(None Provided to Spotify)";
+
 
             }
         }

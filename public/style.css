@@ -265,12 +265,8 @@ i.name {
 /*might have error here?*/
 
 .smallSingleCoverLabel {
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
-    float: left;
-    margin-right: 5px;
-    margin-top: 4px;
+    width: 70px;
+    height: 70px;
 }
 
 .middleSingleCoverLabel {
@@ -282,7 +278,6 @@ i.name {
 }
 
 .middleSingleCoverLabel>img {
-    float: left;
     border: 2px solid black;
     margin: 1%;
     height: 100%;
