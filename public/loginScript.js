@@ -5,8 +5,7 @@ $("#playSomething").hide();
 //$("#playlistList").hide();
 
 $("#sticky-footer").hide();
-
-$("#playlistOrganizer").hide();
+//$("#playlistOrganizer").hide();
 $("#songInfo").hide();
 $("#artistInfo").hide();
 
@@ -26,9 +25,10 @@ var scope =
 
 var online = "http://playlists.wezlalabs.com/";
 var localHost = "http://localhost:5000" //"http://localhost:5000"
+var myHomeLol = "http://72.90.137.14:5000/"
 
 var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
-var redirect_uri = localHost;
+var redirect_uri = myHomeLol;
 
 /**
  * Obtains parameters from the hash of the URL
@@ -79,6 +79,7 @@ if (access_token && (state == null || state !== storedState)) {
                 console.log("logged in.");
                 console.log(response)
                 loggedIn = true;
+                $.when(getPlaylists()).done(function() { assemblePlaylistRow() });
                 $("#username").html(response['display_name']);
                 $("#pfp").attr("src", response['images'][0]['url']);
                 $("#loginPage").hide();

@@ -57,8 +57,8 @@ function createNewPlaylistDiv(newPlaylist) {
             //<button type="btn" class="btn btn-danger" style="width:100%; height=50%; float:right; padding:auto">Remove</button>
             `</div>`;
     }
-    updateSinglePlaylist(newPlaylist['uri'].substring(17));
-    updateSingePlaylistNameArt(newPlaylist['uri'].substring(17));
+    updateSinglePlaylist(newPlaylist['id']);
+    updateSingePlaylistNameArt(newPlaylist['id']);
 
     return newDiv;
 }
@@ -66,17 +66,27 @@ function createNewPlaylistDiv(newPlaylist) {
 //Inserts a div into the "Row" for the playlists
 function addNewPlaylistDiv(i) {
 
-    // console.log(songObj)
+    if (document.getElementById("activePlaylists").classList.contains("displayNone")){
+        document.getElementById("activePlaylists").classList.remove("displayNone");
+    }
+    document.getElementById("PLBox_"+i).remove();
+     console.log(knownPlaylists)
 
     //   console.log(knownPlaylists)
     //   console.log(playlistJSON['items'][i]['uri'].substring(17))
 
 
-    if (findByUri(knownPlaylists, playlistJSON['items'][i]['uri'].substring(17)) != null) {
+    if (findByUri(knownPlaylists, playlistJSON['items'][i]['id']) != null) {
         //     console.log("already exists in our list");
         return;
     } else {
-        knownPlaylists.push(playlistJSON['items'][i]['uri'].substring(17));
+        if (playlistJSON['items'][i]['owner']['id'] != username){
+            console.log(`User doesn't own ${playlistJSON['items'][i]['name']}, skipping.`);
+            return;
+
+        }
+        console.log("Added Playlist")
+        knownPlaylists.push(playlistJSON['items'][i]['id']);
     }
 
     // $("#playlistList").hide();
@@ -405,6 +415,7 @@ function move(elem, target) {
     }
 }
 
+/*
 function changeMode(mode) {
 
     if (username == undefined || username == "" || username == null) {
@@ -418,18 +429,18 @@ function changeMode(mode) {
         $("#playlistsView").show();
         $("#playlistList").show();
         $("#playlistListList").show();
-        $("#playlistOrganizer").show();
+      //  $("#playlistOrganizer").show();
 
         $("#songInfo").hide();
     } else if (mode == "songFeatures") {
         $("#playlistsView").hide();
         $("#playlistList").hide();
         $("#playlistListList").hide();
-        $("#playlistOrganizer").hide();
+      //  $("#playlistOrganizer").hide();
 
         $("#songInfo").show();
     }
-}
+}*/
 
 function updateTopTracks(data) {
     const shuffled = data['tracks'].sort(() => 0.5 - Math.random());
@@ -456,7 +467,7 @@ function updateRelatedArtists(data) {
 }
 
 function createTopTrack(track) {
-    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2" onclick="playTrackFromAlbum('${track['id']}','${track['album']['id']}')">
+    return `<div class="col-6 col-md-3 col-lg-3 mb-2 mt-2" onclick="playTrackFromAlbum('${track['id']}','${track['album']['id']}')">
     <div class="card matchBackground">
         <div class="card-body blackText p-0 mb-0">
             <img class="card-img-top" style="border-radius: 20px" src="${track['album']['images'][0]['url']}" alt="...">
@@ -474,7 +485,7 @@ function createTopTrack(track) {
 }
 
 function createRelatedArtist(artist) {
-    return `<div class="col-6 col-sm-4 col-md-3 col-lg-3 mb-2 mt-2" onclick="playRandomTopTrack('${artist['id']}','artist')">
+    return `<div class="col-6 col-sm-6 col-md-3 col-lg-3 mb-2 mt-2" onclick="playRandomTopTrack('${artist['id']}','artist')">
     <div class="card matchBackground">
         <div class="card-body blackText p-0 mb-0">
             <img class="card-img-top" style="border-radius: 20px" src="${artist['images'][0]['url']}" alt="...">
@@ -564,3 +575,117 @@ function HideTip() {
 }
 
 document.getElementById("tips").addEventListener("click", HideTip);
+
+
+//** New Era **//
+
+
+function load(msg, where, id) {
+    document.getElementById(where).innerHTML = ` <div id="${id}" class="loadingFrame container">
+    <div class="text-center" style="width:100%; font-size: 2em">
+        <i class="fas fa-spinner fa-spin"></i>
+        <div class="loadingMessage" style="font-size: .5em">${msg}</div>
+    </div>
+</div>`
+}
+
+function loadAppend(msg, where, id) {
+    document.getElementById(where).innerHTML += ` <div id="${id}" class="loadingFrame container">
+    <div class="text-center" style="width:100%; font-size: 2em">
+        <i class="fas fa-spinner fa-spin"></i>
+        <div class="loadingMessage" style="font-size: .5em">${msg}</div>
+    </div>
+</div>`
+}
+
+
+function stopLoad(id) {
+    if (document.getElementById(id) != null) {
+        document.getElementById(id).remove();
+    }
+}
+
+function assemblePlaylistBox(playlist, i,ith) {
+    return `<div id="PLBox_${i}" class="card mr-3 ${i}" onclick="addNewPlaylistDiv(${ith})">
+    <img class="selectImg" src="${playlist['images'].length!=0?playlist['images'][0]['url']:'https://developer.spotify.com/assets/branding-guidelines/icon4@2x.png'}">
+    <div class="albumTitle text-left pl-2 pr-2 pt-1">
+        ${playlist['name']}
+    </div> 
+    </div>`
+}
+
+function addMorePlaylists() {
+    load("Loading Playlists...", "userPlaylistFrame", "playlistLoadFrame");
+    $.when(getPlaylists()).done(function() {
+        assemblePlaylistRow();
+    });
+
+}
+
+function assemblePlaylistRow() {
+    load("Loading Playlists...", "playlistListFrameBoxes", "playlistLoadFrame");
+    for (let i = 0; i < playlistJSONNew.length; i++) {
+        if (playlistJSONNew[i]['owner']['id'] != username){
+            console.log(`User doesn't own ${playlistJSONNew[i]['name']}, skipping.`);
+            continue;
+        }else{
+            console.log(playlistJSONNew[i]);
+            document.getElementById("playlistListFrameBoxes").innerHTML += assemblePlaylistBox(playlistJSONNew[i], i,i);
+        }
+    }
+
+    stopLoad("playlistLoadFrame");
+
+    /* Add 50 more...
+    console.log(`${playlistJSONNew.length}|${playlistNumber}`);
+    if (playlistJSONNew.length < playlistNumber) {
+        document.getElementById("playlistListFrameBoxes").innerHTML +=
+            `<div class="card mr-3" onclick="addMorePlaylists()">
+        <img class="selectImg" src="${'https://developer.spotify.com/assets/branding-guidelines/icon4@2x.png'}">
+        <div class="albumTitle">
+            Get 50 more
+        </div> 
+    </div>`;
+    }
+    */
+}
+
+function contains(arr, element) {
+    for (let i = 0; i < arr.length; i++) {
+        //  console.log(i);
+        if (arr[i] == element) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+////////Nav Control//////////
+
+views = ['playlistOrganizer','artistInfo','songInfo'];
+function showHide(showThis){
+    console.log(`Show Goal: #${showThis}`)
+    for (let i = 0;i<views.length;i++){
+        console.log(`hiding #${views[i]}`);
+        $("#"+views[i]).hide();
+        //$("#"+views[i]).hide("slide", { direction: "left" }, 1200);
+    }
+    $("#"+showThis).show();
+    //$("#"+showThis).delay(400).show("slide", { direction: "left" }, 1200);
+}
+
+//////////////////
+
+//* JQUERY *//
+
+$( document ).ready(function() {
+    for (let i = 1;i<views.length;i++){
+        console.log(`hiding #${views[i]}`);
+        $("#"+views[i]).hide();
+        //$("#"+views[i]).hide("slide", { direction: "left" }, 1200);
+    }
+    console.log("showing: "+views[0]);
+    $("#"+views[0]).show();
+    
+});

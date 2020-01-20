@@ -21,41 +21,33 @@
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark ">
         <a class="name navbar-brand " href="#">Nufi<i class="name fas fa-compact-disc"></i></a>
 
-        <button class="navbar-toggler collapsed ml-auto mr-3" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-            </button>
 
+
+
+        <button class="navbar-toggler collapsed ml-auto mr-0" style="border:none" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <div class="float-right">
+                <img id="pfp" class=" float-left rounded-circle z-depth-0 mr-2" alt="avatar image" height="35" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
+                <a id="username" class="displayNone float-left  nav-link active"></a>
+                <i class="fas fa-bars pt-2 pb-2 float-right"></i>
+            </div>
+
+
+        </button>
 
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item "><a href="#playlistOrganizerTarget" onclick="" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-music"></i>Playlists</a></li>
-                <li class="nav-item "><a href="#songInfoTarget" onclick="" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-guitar"></i>Song Info</a></li>
-                <li class="nav-item "><a href="#artistInfoTarget" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-portrait"></i>Artist Info</a></li>
-                <!--
-                </ul>
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item">
-                        <div class="" style="height:100%">
-                            <img id="pfp" class="float-left mr-2 rounded-circle z-depth-0"
-                            alt="avatar image" height="35" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
-                            <a id="username" class="hide float-left nav-link active"></a>
-                        </div>
-                    </li>
-                </ul>
-            -->
+                <li class="nav-item "><a href="#playlistOrganizerTarget" onclick="showHide('playlistOrganizer')" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-music"></i>Playlists</a></li>
+                <li class="nav-item "><a href="#songInfoTarget" onclick="showHide('songInfo')" class=" nav-link"><i class="ml-2 mr-2 ti fas fa-guitar"></i>Song Info</a></li>
+                <li class="nav-item "><a href="#artistInfoTarget" onclick="showHide('artistInfo')" class="nav-link"><i class="ml-2 mr-2 ti fas fa-portrait"></i>Artist Info</a></li>
         </div>
 
-        <div id="user" class="navbar-nav float-right" style="height:100%;">
-            <img id="pfp" class="float-left rounded-circle z-depth-0" alt="avatar image" height="35" src="http://probablyprogramming.com/wp-content/uploads/2009/03/tinytrans.gif"></img>
-            <a id="username" class="hide float-left nav-link active"></a>
 
-        </div>
 
-        </div>
+
     </nav>
 
     <div id="page-content" class="mt-5 container">
-        <div id="playlistOrganizerTarget"></div>
+
         <div id="loginPage" class="mb-3 mt-5">
             <div class="">
                 <h1 class="mb-2">Some Tools For Spotify</h1>
@@ -78,12 +70,10 @@
             </div>
         </div>
 
-        <div id="" class=""></div>
         <div id="playlistOrganizer">
             <div id="playlistsView" class="container mb-3" id="" style="display: none">
                 <h1 class="pt-5 mb-2">Playlist Organizer</h1>
                 <div id="tips">
-                    <h1 class="pt-3 mb-2 hide">How to:</h1>
                     <p></p>
                     <p>Select playlists you want to add songs to below. You can toggle your currently playing song's inclusion in the playlist by clicking on their cover.
                     </p>
@@ -96,40 +86,46 @@
                     </script>
                 -->
                 </div>
-                <div class="row gutter" id="playlistHolder">
-                </div>
+
             </div>
 
-            <div id="playlistList" class="container mb-3" style="display: none">
-                <button onclick="populate()" data-toggle="collapse" data-target="#populated" id="populateToggle" class="spotifyBtn mb-3" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button">
+            <div id="playlistList" class="container mb-3" style="">
+              <!--  <button onclick="populate()" data-toggle="collapse" data-target="#populated" id="populateToggle" class="spotifyBtn mb-3" style="width: 150px; margin-top: 0vh; margin-left: 0vw" type="button">
                 Playlists
                 </button>
                 <div id="populated" class="">
                     <ul id="playlistListList" class="list-group collapse">
 
-                        <!--
-                        <li class="list-group-item" onclick="addNewPlaylistDiv(fdfd)">
-                            <div class="smallSingleCoverLabel mr-2">
-                                <img src="${playlistJSON['items'][i]['images'][0]['url']}">
-                            </div>
-                            <div class="pt-2" style="color:black;">
-                                ${playlistJSON['items'][i]['name']}
-                            </div>
-                        </li>
-                        -->
-
                     </ul>
                 </div>
+            -->
+
+            <h1 class="pt-5 mb-2">Your Playlists</h1>
+            <p></p>
+            <!--
+            <p>First 50 playlists you own.
+            </p>
+        -->
+
+            <div id="playlistListFrameBoxes" class="scrollmenu mt-3">
+            </div>
+            <div id="activePlaylists" class="displayNone">
+            <h1 class="pt-5 mb-2">Active Playlists</h1>
+            <p></p>
+            <!--
+            <p>Playlists you have selected to manage. Manage them here.
+            </p>
+        -->
+            <div class="row gutter" id="playlistHolder">
+            </div>
+            </div>
             </div>
         </div>
 
-        <div id="artistInfoTarget" class="mt-5 pt-5"></div>
-        <div id="artistInfo" class="container mb-3 pt-2">
+        <div id="artistInfo" class=" container mb-3 ">
             <!--<h4>Artist Info</h4>
             <p>Genres, top tracks, & related artists.</p>-->
-
-            <br>
-            <h1 id="artistName" class="card-title text-left pb-0 mb-0"></h1>
+            <h1 id="artistName" class="card-title text-left pb-0 mb-0 pt-5"></h1>
 
             <div class="row gutter">
                 <div class="col-sm-4 mb-2 mt-2">
@@ -190,14 +186,9 @@
             </div>
         </div>
 
-        <div id="songInfoTarget" class="mt-5 pt-5"></div>
-        <div id="songInfo" class="container mb-3" style="">
-            <!--
-            <h1 class="pt-5 mb-2">Song Info</h1>
-            <p>Here is some information on the currently playing track.</p>
-            -->
-            <br>
-            <h2>Audio Features:</h2>
+        <div id="songInfo" class=" container mb-3" style="">
+
+            <h1 class="pt-5">Audio Features:</h1>
             <p>Spotify doesn't just categorize music by Genre; here are some other statistics it keeps track of.</p>
 
 
@@ -346,9 +337,11 @@
         </div>
     </footer>
 
-    <!---->
+
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.compatibility.js"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 

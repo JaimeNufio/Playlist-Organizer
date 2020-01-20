@@ -18,6 +18,7 @@ function songInPlaylist(songURI, playlistObject) {
 //Get Current Song
 //Update Function
 var songObj = null;
+var started = false;
 setInterval(function() {
 
     if (songObj == null && username != undefined) {
@@ -39,24 +40,32 @@ setInterval(function() {
             success: function(data) {
 
                 if (data == undefined || data == null) {
+                    $("#playSomething").show();
+                    $("#playlistOrganizer").hide();
+                    
                     $("#sticky-footer").hide();
                     $("#playlistsView").hide();
                     $("#playlistList").hide();
                     $("#playlistListList").hide();
-                    $("#playlistOrganizer").hide();
                     $("#songInfo").hide();
                     $("#artistInfo").hide();
-                    $("#playSomething").show();
+                    
                     return;
-                } else {
+                } else if (!started) {
+                    console.log("Force Show")
+                    started = true;
+
                     $("#playSomething").hide();
                     $("#sticky-footer").show();
+                    $("#playlistOrganizer").show();
+                    /*
                     $("#playlistsView").show();
                     $("#playlistList").show();
                     $("#playlistListList").show();
-                    $("#playlistOrganizer").show();
+                    
                     $("#songInfo").show();
                     $("#artistInfo").show();
+                    */
                 }
 
                 if (songObj == null || data['item']['uri'] != songObj['item']['uri']) {
@@ -78,12 +87,13 @@ setInterval(function() {
                     //console.log("SongObj")
                     //console.log(songObj)
 
+                    /*
                     $("#playlistsView").show();
                     $("#playlistList").show();
                     $("#playlistListList").show();
                     $("#playlistOrganizer").show();
                     $("#songInfo").show();
-                    $("#artistInfo").show();
+                    $("#artistInfo").show();*/
                     shouldShowCreateOption = true;
 
                     try {
@@ -950,11 +960,55 @@ function getArtistBlurb() {
 
 }
 
-
 function playIcon() {
     document.querySelector("#pause").classList.remove("hide");
     document.querySelector("#play").classList.add("hide");
 }
+
+
+//** New Era **//
+//Get all of the user's playlists
+//store int playlistJSON, a list clustered into groups of 50
+
+var playlistJSONNew = [];
+var playlistNumber = 0;
+var playlistOffset = -50;
+
+
+function getPlaylists() {
+    playlistOffset += 50;
+    let tag = 0;
+    return $.ajax({
+        url: "https://api.spotify.com/v1/me/playlists?limit=50&offset=" + playlistOffset,
+        type: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + access_token
+        },
+        success: function(data) {
+                playlistNumber = data['total'];
+                //console.log("Ack: " + (data['items'].length + offset));
+                console.log(data);
+                if (playlistJSONNew.length == playlistNumber) {
+                    playlistJSONNew = playlistJSONNew.concat(data['items']);
+                    return playlistJSONNew;
+                }
+                playlistJSONNew = playlistJSONNew.concat(data['items']);
+                // getPlaylists(offset + 50);
+            }
+            //retry
+            ,
+        error: function(data) {
+            console.log("Error on: " + tag);
+            let wait = data.getResponseHeader('Retry-After')
+            setTimeout(function() {
+                console.log("Waited " + wait + " resending " + tag);
+                $.ajax(this);
+            }, wait);
+        }
+    });
+}
+
+/////////////////
 
 document.getElementById("nextSong").addEventListener("click", nextSong);
 document.getElementById("lastSong").addEventListener("click", lastSong);
