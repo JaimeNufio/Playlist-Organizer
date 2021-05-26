@@ -13,8 +13,8 @@ The tool also offers features for learning about the artists of your currently p
 # Demo:
 https://www.youtube.com/watch?v=Fj94QewlquA
 
-![PC View](assets\screenshot.png)
-![Mobile1](assets\mobile-artist-discover.png)
+![PC View](https://github.com/JaimeNufio/Playlist-Organizer/blob/master/assets/screenshot.png?raw=true)
+![Mobile1](https://github.com/JaimeNufio/Playlist-Organizer/blob/master/assets/mobile-artist-discover.png)
 
 # To Run:
 
