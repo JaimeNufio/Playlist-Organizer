@@ -25,10 +25,10 @@ var scope =
 
 var online = "http://playlists.wezlalabs.com/";
 var localHost = "http://localhost:5000" //"http://localhost:5000"
-var myHomeLol = "http://72.90.137.14:5000/"
+
 
 var client_id = 'e01d706bd59d491cba77787afa5a9bce'; // Your client id
-var redirect_uri = myHomeLol;
+var redirect_uri = localHost//myHomeLol;
 
 /**
  * Obtains parameters from the hash of the URL
