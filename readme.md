@@ -8,7 +8,7 @@ Additionally, there are some tools to see more information about your music.
 
 The tool also offers features for learning about the artists of your currently playing song, as well as features for discovering new music!
 
-*Built responsive with Mobile Devices in mind!!*
+*Built responsive with Mobile Devices in mind*
 
 # Demo:
 https://www.youtube.com/watch?v=Fj94QewlquA
@@ -25,3 +25,7 @@ clone repository
 `node app.js`
 
 open in your browser at `localhost:5000`
+
+# Technology: 
+
+Built in pure Javascript, HTML, CSS NodeJS, server runs Express
