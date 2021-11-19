@@ -1,4 +1,4 @@
-# Nufio - Some Tools for Spotify
+# Nufio Playlist Organizer - Some Tools for Spotify
 
 A faster, more human, way of organizing which of your songs are in which of your playlists.
 
