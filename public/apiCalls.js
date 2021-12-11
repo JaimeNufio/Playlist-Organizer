@@ -21,14 +21,6 @@ var songObj = null;
 var started = false;
 setInterval(function() {
 
-    if (songObj == null && username != undefined) {
-        // console.log("Show advice")
-        //  $("#playSomething").show();
-    } else {
-        //console.log("Hide advice")
-        //   $("#playSomething").hide();
-    }
-
     if (loggedIn) {
         console.log("AJAX: Get Currently-Playing");
         $.ajax({
@@ -82,18 +74,7 @@ setInterval(function() {
                 if (wasNull || songObj['item']['uri'] != data['item']['uri']) { //data != null && songObj != null && songObj != undefined && data['item']['uri'] != songObj['item']['uri'] || wasNull) {
                     wasNull = false;
                     songObj = data;
-                    //console.log("Updating song");
 
-                    //console.log("SongObj")
-                    //console.log(songObj)
-
-                    /*
-                    $("#playlistsView").show();
-                    $("#playlistList").show();
-                    $("#playlistListList").show();
-                    $("#playlistOrganizer").show();
-                    $("#songInfo").show();
-                    $("#artistInfo").show();*/
                     shouldShowCreateOption = true;
 
                     try {
@@ -165,21 +146,6 @@ setInterval(function() {
     }
 
 }, 500);
-
-
-//Check Playlists
-/*
-setInterval(function() {
-    //   getAlbumObj();
-    if (songObj != null) {
-      //  for (let i = 0; i < knownPlaylists.length; i++) {
-            //            updateSinglePlaylist(knownPlaylists[i]);
-            //            updateSingePlaylistNameArt(knownPlaylists[i]);
-    //    }
-    }
-}, 500)
-*/
-
 
 function removeSongFromPlaylist(songURI, playlistURI) {
     let tag = Math.random();
@@ -837,14 +803,9 @@ function playTrackFromAlbum(trackId, albumId) {
                         }, wait);
                     }
                 })
-
-
             }
         }
     })
-
-
-
 }
 
 var TopTracksofArtist = {};
